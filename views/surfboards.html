@@ -11,25 +11,25 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
-        alert("error")
-        // $(document).ready(function() {
-        //     $.ajax({
-        //         url: "http://localhost:3000/surfboards",
-        //         method: 'GET',
-        //         dataType: 'json'
-        //     }).done(function(surfboards) {
-        //
-        //         console.log('surfboards:', surfboards);
-        //         surfboards.forEach((surfboard) => {
-        //
-        //             console.log('ProductName:', surfboard.ProductName);
-        //             console.log('ProductSize:', surfboard.ProductSize);
-        //             $('#surfboards-list').append('<li>' + surfboard.ProductName + ', ' + surfboard.ProductSize + '</li>');
-        //         });
-        //     }).fail(function(error) {
-        //         console.error('Failed to get surfboards:', error);
-        //     });
-        // });
+
+        $(document).ready(function() {
+            $.ajax({
+                url: "http://localhost:3000/surfboards",
+                method: 'GET',
+                dataType: 'json'
+            }).done(function(surfboards) {
+
+                console.log('surfboards:', surfboards);
+                surfboards.forEach((surfboard) => {
+
+                    console.log('ProductName:', surfboard.model);
+                    console.log('ProductSize:', surfboard.height);
+                    $('#surfboards-list').append('<li>' + surfboard.model + ', ' + surfboard.height + '</li>');
+                });
+            }).fail(function(error) {
+                console.error('Failed to get surfboards:', error);
+            });
+        });
     </script>
 </body>
 </html>

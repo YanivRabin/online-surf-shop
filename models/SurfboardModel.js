@@ -2,18 +2,17 @@ const mongoose = require('mongoose');
 
 const surfboardSchema = new mongoose.Schema({
 
-    ProductPK: { type: Number, required: true },
-    ProductName: { type: String, required: true },
-    ProductManufacturingCompany: { type: String, required: true },
-    ProductPrice: { type: Number, required: true },
-    ProductImage: { type: [String], required: true },
-    ProductColor: { type: String, required: true },
-    ProductTitle: { type: String, required: true },
-    ProductTail: { type: String, required: true },
-    ProductSize: { type: String, required: true },
-    ProductWidth: { type: Number, required: true },
-    ProductThick: { type: Number, required: true },
-    ProductVol: { type: String, required: true }
+    company: { type: String, required: true },
+    model: { type: String, required: true },
+    price: { type: Number, required: true },
+    image: { type: [String], required: true },
+    color: { type: String, required: true },
+    type: { type: String, required: true },
+    tail: { type: String, required: true },
+    height: { type: String, required: true },
+    width: { type: Number, required: true },
+    thick: { type: Number, required: true },
+    volume: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Surfboard', surfboardSchema);
