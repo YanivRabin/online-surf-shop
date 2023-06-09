@@ -1,11 +1,14 @@
 const path = require('path');
 const User = require("../models/UserModel");
+const jwt  = require('jsonwebtoken');
 
 const getHomePage = (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/home.html'));
+    // res.sendFile(path.join(__dirname, '../views/home.html'));
+    res.json({ name: "yaniv" });
 };
 
 const redirectToSurfboards = (req, res) => {
+
     res.redirect('/surfboards');
 };
 
@@ -44,31 +47,22 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
 
     const { email, password } = req.body;
-
     try {
+
         // Find the user by username
         const user = await User.findOne({ email });
-        if (!user) {
+        if (!user)
             return res.status(404).json({ message: 'User not found' });
-        }
 
         // Check if the provided password matches the stored password
-        // const isPasswordValid = await user.comparePassword(password);
-        if (password === user.password) {
-            /////
-            res.redirect('/surfboards');
-            ////
-            // return res.status(401).json({ message: 'Invalid credentials' });
-        }
-        else {
+        if (password !== user.password)
             res.status(401).json({ message: 'Invalid credentials' });
-        }
 
-        // // Generate a JWT token
-        // const token = jwt.sign({ userId: user._id }, 'secretKey');
-        //
-        // res.status(200).json({ token });
+        // Generate a JWT token
+        const token = jwt.sign({ userId: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, {expiresIn:"3d"});
+        res.status(200).json({ token });
     } catch (error) {
+
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }

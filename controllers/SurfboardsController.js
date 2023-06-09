@@ -1,26 +1,26 @@
-const Surfboard = require('../models/SurfboardModel');
+// const Surfboard = require('../models/SurfboardModel');
+//
+//
+// const getAllSurfboards = async (req, res) => {
+//
+//     try {
+//
+//         const surfboards = await Surfboard.find({});
+//         res.json(surfboards);
+//     } catch (err) {
+//
+//         console.error('Failed to find surfboards:', err);
+//         res.status(500).send('Internal Server Error');
+//     }
+// }
+//
+// module.exports = {
+//
+//     getAllSurfboards
+// }
 
 
-const getAllSurfboards = async (req, res) => {
 
-    try {
-
-        const surfboards = await Surfboard.find({});
-        res.json(surfboards);
-    } catch (err) {
-
-        console.error('Failed to find surfboards:', err);
-        res.status(500).send('Internal Server Error');
-    }
-}
-
-module.exports = {
-
-    getAllSurfboards
-}
-
-
-/*
 const Surfboard = require('../models/SurfboardModel');
 
 // Get all surfboards
@@ -40,9 +40,8 @@ const createSurfboard = async (req, res) => {
 
     try {
         // Check if the user is an admin
-        if (!req.user.isAdmin) {
+        if (!req.user.isAdmin)
             return res.status(403).json({ message: 'Unauthorized' });
-        }
 
         // Create a new surfboard object
         const newSurfboard = new Surfboard({
@@ -123,9 +122,9 @@ const deleteSurfboard = async (req, res) => {
 };
 
 module.exports = {
+
     getAllSurfboards,
     createSurfboard,
     updateSurfboard,
     deleteSurfboard
 };
-*/
