@@ -3,7 +3,6 @@ body {
     background-image: url("images/back.jpg");
     background-repeat: repeat;
     background-size: auto;
-
     background-color: #f2f2f2;
     color: #333;
     line-height: 1.5;
@@ -18,7 +17,6 @@ body {
 
 /* Header styles */
 header {
-
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -35,22 +33,109 @@ nav a {
     color: #333;
 }
 
-/* Hero section styles */
-.hero {
-
+.shop-now-btn {
     padding: 40px;
     text-align: center;
     margin-bottom: 40px;
 }
 
-.hero-heading {
-    font-size: 32px;
+.shop-now-btn img {
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Filter menu styles */
+.filter-menu {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-menu h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.filter-menu label {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.filter-menu select {
+    padding: 3px;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.featured-products {
+    margin-bottom: 40px;
+    display: flex; /* Add flex display */
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: space-between; /* Distribute items evenly */
+}
+
+
+.featured-products h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.product-card {
+    flex-basis: calc(33.33% - 20px); /* Adjust the width based on the number of items you want in a row */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
     margin-bottom: 10px;
 }
 
-.hero-text {
+.product-card h3 {
     font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.product-card p {
     margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+
+.btn img {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.btn.add-to-cart {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.btn.add-to-cart:hover {
+    background-color: #ff3d00;
+    border-color: #ff3d00;
 }
 
 /* Footer styles */
@@ -60,46 +145,18 @@ footer {
     text-align: center;
 }
 
-/* Product card styles */
-.product-card {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.product-card img {
-    max-width: 100%;
+footer p {
     margin-bottom: 10px;
 }
 
-.product-card-title {
-    font-size: 18px;
+footer img {
+    max-width: 50px;
+    margin-top: 10px;
+}
+
+.product-price {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
     margin-bottom: 10px;
-}
-
-.product-card-description {
-    margin-bottom: 20px;
-}
-
-/* Button styles */
-.btn {
-    display: inline-block;
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 4px;
-    text-decoration: none;
-}
-
-.btn:hover {
-    background-color: #555;
-}
-
-.btn img {
-    margin-left: 10px;
 }
