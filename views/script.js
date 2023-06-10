@@ -1,50 +1,57 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get the filter elements
-    const colorFilter = document.getElementById('color-filter');
-    const sizeFilter = document.getElementById('size-filter');
-    const levelFilter = document.getElementById('level-filter');
+    // Get a reference to the "Add to Cart" buttons
+    const addToCartBtns = document.querySelectorAll('.add-to-cart');
 
-    // Get all the product cards
-    const productCards = document.getElementsByClassName('product-card');
+    // Add a click event listener to each "Add to Cart" button
+    addToCartBtns.forEach(function(btn) {
+        btn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
 
-    // Get the container for filtered products
-    const filteredProductsContainer = document.getElementById('filtered-products');
+            // Retrieve the product information
+            const productCard = event.target.closest('.product-card');
+            const productName = productCard.querySelector('h3').textContent;
+            const productPrice = productCard.querySelector('.product-price').textContent;
 
-    // Function to filter the products based on selected filters
-    function filterProducts() {
-        const selectedColor = colorFilter.value;
-        const selectedSize = sizeFilter.value;
-        const selectedLevel = levelFilter.value;
+            // Perform the necessary actions to add the product to the cart
+            addToCart(productName, productPrice);
+        });
+    });
 
-        // Clear the container before adding filtered products
-        filteredProductsContainer.innerHTML = '';
+    // Function to add the product to the cart
+    function addToCart(name, price) {
+        // Create a new product object
+        const product = {
+            name: name,
+            price: price
+        };
 
-        // Loop through all the product cards and add matching cards to the filtered container
-        for (let i = 0; i < productCards.length; i++) {
-            const card = productCards[i];
-            const cardColor = card.getAttribute('data-color');
-            const cardSize = card.getAttribute('data-size');
-            const cardLevel = card.getAttribute('data-level');
+        // Retrieve the existing cart data from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // Check if the card matches the selected filters
-            const colorMatch = selectedColor === 'all' || selectedColor === cardColor;
-            const sizeMatch = selectedSize === 'all' || selectedSize === cardSize;
-            const levelMatch = selectedLevel === 'all' || selectedLevel === cardLevel;
+        // Add the product to the cart
+        cart.push(product);
 
-            // If the card matches the filters, show the card
-            if (colorMatch && sizeMatch && levelMatch) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        }
+        // Store the updated cart data in localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    // Add event listeners to the filter elements
-    colorFilter.addEventListener('change', filterProducts);
-    sizeFilter.addEventListener('change', filterProducts);
-    levelFilter.addEventListener('change', filterProducts);
+    // Cart page functionality
+    if (window.location.pathname === '/cart.html') {
+        // Get the cart items container
+        const cartItemsContainer = document.getElementById('cart-items');
 
-    // Show all products initially
-    filterProducts();
+        // Retrieve the cart data from localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Loop through the cart items and display them
+        cart.forEach(function(product) {
+            const productElement = document.createElement('div');
+            productElement.classList.add('cart-product');
+            productElement.innerHTML = `
+        <span class="cart-product-name">${product.name}</span>
+        <span class="cart-product-price">${product.price}</span>
+      `;
+            cartItemsContainer.appendChild(productElement);
+        });
+    }
 });
