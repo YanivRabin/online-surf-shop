@@ -34,10 +34,6 @@ app.use(session({
 app.use('/', homeRouter);
 app.use('/auth', authRouter); // for login and register
 app.use('/store', productsRouter); // for surfboards and other products
-// app.use('/surfboards', surfboardsRouter);
-app.get('/chat', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/chat.html'));
-});
 
 io.on('connection', (socket) => {
     socket.broadcast.emit('joined', socket.username+' Joined');
