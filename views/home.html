@@ -7,8 +7,8 @@
 <body>
     <h1>Login</h1>
     <form id="login">
-        <label for="login-email">Email:</label>
-        <input type="email" id="login-email" name="email" required><br>
+        <label for="login-username">Username:</label>
+        <input type="text" id="login-username" name="username" required><br>
 
         <label for="login-password">Password:</label>
         <input type="password" id="login-password" name="password" required><br>
@@ -21,14 +21,18 @@
         <label for="register-username">Username:</label>
         <input type="text" id="register-username" name="username" required><br>
 
-        <label for="register-email">Email:</label>
-        <input type="email" id="register-email" name="email" required><br>
-
         <label for="register-password">Password:</label>
         <input type="password" id="register-password" name="password" required><br>
 
         <button type="submit">Register</button>
     </form>
+    <br>
+    <div>
+        <h1>Logout</h1>
+        <form id="logout">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
     <br>
     <h1>Surfboards</h1>
     <form id="fetchDataForm">
@@ -56,7 +60,7 @@
                         window.location.href = redirectUrl;
                     },
                     error: (error) => {
-                        console.log('Error:', error);
+                        console.log('Error:', error.message);
                     }
                 });
             });
@@ -69,6 +73,24 @@
                     url: '/auth/login',
                     method: 'POST',
                     data: $('#login').serialize(),
+                    success: (response) => {
+
+                        const { redirectUrl } = response;
+                        window.location.href = redirectUrl;
+                    },
+                    error: (error) => {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+
+            $('#logout').submit((event) => {
+
+                event.preventDefault(); // Prevent form submission
+                $.ajax({
+
+                    url: '/auth/logout',
+                    method: 'POST',
                     success: (response) => {
 
                         const { redirectUrl } = response;
