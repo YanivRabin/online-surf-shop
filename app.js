@@ -35,7 +35,7 @@ app.use('/', homeRouter);
 app.use('/auth', authRouter); // for login and register
 app.use('/store', productsRouter); // for surfboards and other products
 // app.use('/surfboards', surfboardsRouter);
-app.use('/chat', (req, res) => {
+app.get('/chat', (req, res) => {
     res.sendFile(path.join(__dirname, './views/chat.html'));
 });
 
