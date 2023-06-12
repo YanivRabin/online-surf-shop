@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Login</h1>
-    <form action="/login" method="POST">
+    <form id="login">
         <label for="login-email">Email:</label>
         <input type="email" id="login-email" name="email" required><br>
 
@@ -17,7 +17,7 @@
     </form>
     <br>
     <h1>Registration</h1>
-    <form action="/register" method="POST">
+    <form id="register">
         <label for="register-username">Username:</label>
         <input type="text" id="register-username" name="username" required><br>
 
@@ -31,22 +31,72 @@
     </form>
     <br>
     <h1>Surfboards</h1>
-    <form action="/surfboards" method="POST">
+    <form id="fetchDataForm">
         <button type="submit">show surfboards</button>
     </form>
+
+    <div id="dataContainer"></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
 
-        $(function() {
-            $.ajax({
-                url: "http://localhost:3000",
-            }).done(function(token) {
+        $(document).ready(() => {
 
-                console.log('token:', token);
+            $('#register').submit((event) => {
 
-            }).fail(function(error) {
-                console.error('Failed to get surfboards:', error);
+                event.preventDefault(); // Prevent form submission
+                $.ajax({
+
+                    url: '/auth/register',
+                    method: 'POST',
+                    data: $('#register').serialize(),
+                    success: (response) => {
+
+                        const { redirectUrl } = response;
+                        window.location.href = redirectUrl;
+                    },
+                    error: (error) => {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+
+            $('#login').submit((event) => {
+
+                event.preventDefault(); // Prevent form submission
+                $.ajax({
+
+                    url: '/auth/login',
+                    method: 'POST',
+                    data: $('#login').serialize(),
+                    success: (response) => {
+
+                        const { redirectUrl } = response;
+                        window.location.href = redirectUrl;
+                    },
+                    error: (error) => {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+
+            // write all surfboards below the button
+            $('#fetchDataForm').submit((event) => {
+
+                event.preventDefault(); // Prevent form submission
+                $.ajax({
+
+                    url: '/surfboards',
+                    method: 'GET',
+                    success: (response) => {
+
+                        const { surfboards } = response;
+                        $('#dataContainer').html(surfboards[0].company + ', ' + surfboards[0].model);
+                    },
+                    error: (error) => {
+                        console.log('Error:', error);
+                    }
+                });
             });
         });
     </script>

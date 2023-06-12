@@ -13,21 +13,22 @@
     <script>
 
         $(document).ready(function() {
+
             $.ajax({
-                url: "http://localhost:3000/surfboards",
+
+                url: "/products/surfboards",
                 method: 'GET',
-                dataType: 'json'
-            }).done(function(surfboards) {
+                success: (data) => {
 
-                console.log('surfboards:', surfboards);
-                surfboards.forEach((surfboard) => {
+                    $('#surfboards-list').empty();  // Clear the existing list
+                    data.forEach((surfboard) => {
 
-                    console.log('ProductName:', surfboard.model);
-                    console.log('ProductSize:', surfboard.height);
-                    $('#surfboards-list').append('<li>' + surfboard.model + ', ' + surfboard.height + '</li>');
-                });
-            }).fail(function(error) {
-                console.error('Failed to get surfboards:', error);
+                        $('#surfboards-list').append('<li>' + surfboard.model + ', ' + surfboard.height + '</li>');
+                    });
+                },
+                error: (error) => {
+                    console.log('Error:', error);
+                }
             });
         });
     </script>

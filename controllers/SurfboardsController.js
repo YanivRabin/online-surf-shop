@@ -1,41 +1,20 @@
-// const Surfboard = require('../models/SurfboardModel');
-//
-//
-// const getAllSurfboards = async (req, res) => {
-//
-//     try {
-//
-//         const surfboards = await Surfboard.find({});
-//         res.json(surfboards);
-//     } catch (err) {
-//
-//         console.error('Failed to find surfboards:', err);
-//         res.status(500).send('Internal Server Error');
-//     }
-// }
-//
-// module.exports = {
-//
-//     getAllSurfboards
-// }
-
-
-
 const Surfboard = require('../models/SurfboardModel');
+
 
 // Get all surfboards
 const getAllSurfboards = async (req, res) => {
+
     try {
         const surfboards = await Surfboard.find({});
-        res.json(surfboards);
+        res.json({surfboards: surfboards});
     } catch (error) {
         console.error('Failed to find surfboards:', error);
         res.status(500).send('Internal Server Error');
     }
 };
-
 // Create a new surfboard (only accessible to admins)
 const createSurfboard = async (req, res) => {
+
     const { company, model, price, image, color, type, tail, height, width, thick, volume } = req.body;
 
     try {
@@ -70,6 +49,7 @@ const createSurfboard = async (req, res) => {
 
 // Update a surfboard (only accessible to admins)
 const updateSurfboard = async (req, res) => {
+
     const surfboardId = req.params.id;
     const { company, model, price, image, color, type, tail, height, width, thick, volume } = req.body;
 
@@ -99,6 +79,7 @@ const updateSurfboard = async (req, res) => {
 
 // Delete a surfboard (only accessible to admins)
 const deleteSurfboard = async (req, res) => {
+
     const surfboardId = req.params.id;
 
     try {

@@ -5,7 +5,7 @@ const verifyToken = (req, res, next) => {
 
     const authHeader = req.headers.authorization;
     if (!authHeader)
-        return res.status(401).json({ message: 'Authentication failed' });
+        return res.status(401).json({ message: 'Authentication failed, auth header: ' + authHeader });
 
     // auth header assemble from "bearer token"
     const token = authHeader.split(" ")[1];
