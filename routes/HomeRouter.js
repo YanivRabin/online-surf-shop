@@ -6,4 +6,6 @@ const path = require("path");
 router.get('/', homeController.getHomePage);
 router.get('/chat',homeController.getChat)
 
+
+
 module.exports = router;
