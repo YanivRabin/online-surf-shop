@@ -12,34 +12,36 @@ const loginForm = async (req, res) => {
 
 const isLoggedIn = async (req, res, next) => {
 
-    if (req.session.username != null) {
-        return next();
-    }
-    else {
-        // change to other format that say your not logged in
-        console.log("not connected");
-        res.redirect('/');
-    }
+    if (!req.session.username)
+        res.status(401).json({ redirectUrl: '/', message: 'User is not connected' });
+
+    return next();
+}
+
+const isAdmin = async (req, res, next) => {
+
+    if (!req.user.isAdmin)
+        return res.status(403).json({ message: 'Unauthorized' });
+
+    return next();
 }
 
 const logoutUser = async (req, res) => {
+
     req.session.destroy(() => {
-        // redirect to log in or home page
-        res.redirect('/');
+        res.status(200).json({ redirectUrl: '/', message: 'User logout successfully' });
     });
 }
 
 const registerUser = async (req, res) => {
 
-    const { username, email, password } = req.body;
-
+    const { username, password } = req.body;
 
     try {
-        // Check if the username or email already exist
-        // need to change to check username and email separate
-        const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+        // Check if the username already exist
+        const existingUser = await User.findOne({ username: username } );
         if (existingUser)
-            return res.status(409).json({ message: 'Username or email already taken' });
+            return res.status(409).json({ message: 'Username already taken' });
 
         // hashing the password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -48,16 +50,13 @@ const registerUser = async (req, res) => {
         const newUser = new User({
 
             username: username,
-            email: email,
             password: hashedPassword
         });
         // Save the user to the database
         await newUser.save();
 
         req.session.username = username;
-        // res.status(201).redirect('/');
-        res.status(201).json({ redirect: '/', message: 'User created successfully' });
-
+        res.status(201).json({ redirectUrl: '/', message: 'User created successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -66,11 +65,11 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
 
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
 
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ username: username });
 
         // Find the user by email
         if (!user)
@@ -82,8 +81,7 @@ const loginUser = async (req, res) => {
             // redirect?? if yes then where
             res.status(401).json({ message: 'Invalid password' });
 
-        req.session.username = user.username;
-        // res.status(200).redirect('/');
+        req.session.username = username;
         res.status(200).json({ redirectUrl: '/' , message: 'User login successfully'});
 
     } catch (error) {
@@ -99,5 +97,6 @@ module.exports = {
     loginForm,
     registerForm,
     isLoggedIn,
-    logoutUser
+    logoutUser,
+    isAdmin
 }

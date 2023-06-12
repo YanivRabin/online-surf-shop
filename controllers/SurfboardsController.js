@@ -12,29 +12,25 @@ const getAllSurfboards = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-// Create a new surfboard (only accessible to admins)
+
 const createSurfboard = async (req, res) => {
 
     const { company, model, price, image, color, type, tail, height, width, thick, volume } = req.body;
 
     try {
-        // Check if the user is an admin
-        if (!req.user.isAdmin)
-            return res.status(403).json({ message: 'Unauthorized' });
-
         // Create a new surfboard object
         const newSurfboard = new Surfboard({
-            company,
-            model,
-            price,
-            image,
-            color,
-            type,
-            tail,
-            height,
-            width,
-            thick,
-            volume
+            company: company,
+            model: model,
+            price: price,
+            image: image,
+            color: color,
+            type: type,
+            tail: tail,
+            height: height,
+            width: width,
+            thick: thick,
+            volume: volume
         });
 
         // Save the surfboard to the database
@@ -47,17 +43,12 @@ const createSurfboard = async (req, res) => {
     }
 };
 
-// Update a surfboard (only accessible to admins)
 const updateSurfboard = async (req, res) => {
 
     const surfboardId = req.params.id;
     const { company, model, price, image, color, type, tail, height, width, thick, volume } = req.body;
 
     try {
-        // Check if the user is an admin
-        if (!req.user.isAdmin) {
-            return res.status(403).json({ message: 'Unauthorized' });
-        }
 
         // Find and update the surfboard
         const updatedSurfboard = await Surfboard.findByIdAndUpdate(
@@ -77,16 +68,11 @@ const updateSurfboard = async (req, res) => {
     }
 };
 
-// Delete a surfboard (only accessible to admins)
 const deleteSurfboard = async (req, res) => {
 
     const surfboardId = req.params.id;
 
     try {
-        // Check if the user is an admin
-        if (!req.user.isAdmin) {
-            return res.status(403).json({ message: 'Unauthorized' });
-        }
 
         // Find and delete the surfboard
         const deletedSurfboard = await Surfboard.findByIdAndDelete(surfboardId);
