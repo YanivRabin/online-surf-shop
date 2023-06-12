@@ -1,20 +1,17 @@
 {
   "scripts": {
-    "app": "env-cmd -f config/SurfShop.env nodemon app.js",
     "test": "env-cmd -f config/Test.env nodemon app.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "custom-env": "^2.0.2",
     "env-cmd": "^10.1.0",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "jsonwebtoken": "^9.0.0",
+    "jquery": "^3.7.0",
     "mongoose": "^7.2.2",
     "nodemon": "^2.0.22",
-    "passport": "^0.6.0",
-    "passport-local-mongoose": "^8.0.0"
+    "socket.io": "^4.6.2",
+    "websocket": "^1.0.34"
   }
 }
