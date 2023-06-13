@@ -1,34 +1,42 @@
-
 <html lang="eng">
 <body>
-<form>
-<label><input autocomplete="off" placeholder="Enter text" /></label>
-<button>Send</button>
-</form>
+
+    <form id="chat">
+    <label><input id="comment" autocomplete="off" placeholder="Enter text" /></label>
+    <button>Send</button>
+    </form>
 
     <div></div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
     <script>
         $(function () {
-            var socket = io();
+
+            const socket = io();
             $('button').click(function () {
+
                 socket.emit('new message', $('input').val());
                 $('input').val('');
             });
             socket.on('new message', function (msg) {
+
                 $('div').append(msg + '<br />');
             });
             socket.on('joined', function (msg) {
+
                 $('div').append('A new user joined<br />');
             });
             socket.on('disconnected', function (msg) {
+
                 $('div').append('A user disconnected<br />');
+            });
+
+            $('#chat').submit((event) => {
+
+                event.preventDefault();
             });
         });
     </script>
 </body>
-
 </html>

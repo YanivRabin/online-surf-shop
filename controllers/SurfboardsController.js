@@ -1,15 +1,19 @@
 const Surfboard = require('../models/SurfboardModel');
+const path = require("path");
 
 
-// Get all surfboards
+const getSurfboardsPage = (req, res) => {
+    return res.sendFile(path.join(__dirname, '../views/surfboards.html'))
+};
+
 const getAllSurfboards = async (req, res) => {
 
     try {
         const surfboards = await Surfboard.find({});
-        res.json({surfboards: surfboards});
+        return res.json({ surfboards: surfboards });
     } catch (error) {
         console.error('Failed to find surfboards:', error);
-        res.status(500).send('Internal Server Error');
+        return res.status(500).send('Internal Server Error');
     }
 };
 
@@ -22,76 +26,90 @@ const createSurfboard = async (req, res) => {
         const newSurfboard = new Surfboard({
             company: company,
             model: model,
-            price: price,
+            price: Number(price),
             image: image,
             color: color,
             type: type,
             tail: tail,
             height: height,
-            width: width,
-            thick: thick,
-            volume: volume
+            width: Number(width),
+            thick: Number(thick),
+            volume: Number(volume)
         });
 
         // Save the surfboard to the database
         await newSurfboard.save();
-
-        res.status(201).json(newSurfboard);
+        return res.status(201).json({ newSurfboard: newSurfboard });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
 const updateSurfboard = async (req, res) => {
 
-    const surfboardId = req.params.id;
-    const { company, model, price, image, color, type, tail, height, width, thick, volume } = req.body;
+    const { _id, company, model, price, image, color, type, tail, height, width, thick, volume } = req.body;
 
     try {
 
         // Find and update the surfboard
         const updatedSurfboard = await Surfboard.findByIdAndUpdate(
-            surfboardId,
+            _id,
             { company, model, price, image, color, type, tail, height, width, thick, volume },
             { new: true }
         );
 
-        if (!updatedSurfboard) {
+        if (!updatedSurfboard)
             return res.status(404).json({ message: 'Surfboard not found' });
-        }
 
-        res.json(updatedSurfboard);
+        return res.json({ updatedSurfboard: updatedSurfboard });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
 const deleteSurfboard = async (req, res) => {
 
-    const surfboardId = req.params.id;
+    const { surfboardId } = req.body;
 
     try {
 
         // Find and delete the surfboard
-        const deletedSurfboard = await Surfboard.findByIdAndDelete(surfboardId);
-
-        if (!deletedSurfboard) {
+        const deleteSurfboard = await Surfboard.findByIdAndDelete(surfboardId);
+        if (!deleteSurfboard)
             return res.status(404).json({ message: 'Surfboard not found' });
-        }
 
-        res.json({ message: 'Surfboard deleted successfully' });
+        return res.json({ message: 'Surfboard deleted successfully' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
+};
+
+const getSurfboardById = async (req, res) => {
+
+    const { surfboardId } = req.body;
+
+
+    try {
+
+        const surfboard = await Surfboard.findById(surfboardId);
+        return res.json({ surfboard: surfboard });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+
 };
 
 module.exports = {
 
+    getSurfboardsPage,
     getAllSurfboards,
     createSurfboard,
     updateSurfboard,
-    deleteSurfboard
+    deleteSurfboard,
+    getSurfboardById
 };
