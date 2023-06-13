@@ -1,20 +1,17 @@
-const express               = require('express');
-const bodyParser            = require('body-parser');
-const { mongoose }          = require('mongoose');
-const path                  = require("path");
-const session               = require("express-session");
-const socketIO = require('socket.io')
-const http = require('http')
-
-
-
-const homeRouter            = require('./routes/HomeRouter');
-const productsRouter        = require('./routes/ProductsRouter');
-const authRouter            = require('./routes/AuthRouter')
+const express        = require('express');
+const bodyParser     = require('body-parser');
+const { mongoose }   = require('mongoose');
+const path           = require("path");
+const session        = require("express-session");
+const socketIO       = require('socket.io')
+const http           = require('http')
+const homeRouter     = require('./routes/HomeRouter');
+const productsRouter = require('./routes/ProductsRouter');
+const authRouter     = require('./routes/AuthRouter')
 
 const app = express();
-const server=http.createServer(app);
-const io=socketIO(server);
+const server = http.createServer(app);
+const io = socketIO(server);
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -40,7 +37,8 @@ app.use('/chat', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    socket.broadcast.emit('joined', socket.username+' Joined');
+
+    socket.broadcast.emit('joined', socket.username + ' Joined');
 
     socket.on('disconnect', () => {
         socket.broadcast.emit('disconnected', socket.username+' Disconnected');
@@ -55,9 +53,3 @@ io.on('connection', (socket) => {
 server.listen(3000, () => { console.log('Server is running on http://localhost:3000'); });
 // npm run app
 // for test: npm run test
-
-module.exports = {
-    io: io,
-   server: server,
-   app: app
-}
