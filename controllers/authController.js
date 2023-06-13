@@ -2,26 +2,26 @@ const User = require("../models/UserModel");
 const bcrypt = require('bcrypt');
 
 
-const registerForm = async (req, res) => {
-    // redirect to register html
-}
+// const registerForm = async (req, res) => {
+//     // redirect to register html
+// }
 
-const loginForm = async (req, res) => {
-    // redirect to log in html
-}
+// const loginForm = async (req, res) => {
+//     // redirect to log in html
+// }
 
 const isLoggedIn = async (req, res, next) => {
 
     if (!req.session.username)
-        res.status(401).json({ redirectUrl: '/', message: 'User is not connected' });
+        return res.status(401).json({ redirectUrl: '/', message: 'User is not connected' });
 
     return next();
 }
 
 const isAdmin = async (req, res, next) => {
 
-    if (!req.user.isAdmin)
-        return res.status(403).json({ message: 'Unauthorized' });
+    if (!req.session.isAdmin)
+        return res.status(403).json({ redirectUrl: '/', message: 'Unauthorized' });
 
     return next();
 }
@@ -29,7 +29,7 @@ const isAdmin = async (req, res, next) => {
 const logoutUser = async (req, res) => {
 
     req.session.destroy(() => {
-        res.status(200).json({ redirectUrl: '/', message: 'User logout successfully' });
+        return res.status(200).json({ redirectUrl: '/', message: 'User logout successfully' });
     });
 }
 
@@ -56,10 +56,11 @@ const registerUser = async (req, res) => {
         await newUser.save();
 
         req.session.username = username;
-        res.status(201).json({ redirectUrl: '/', message: 'User created successfully' });
+        req.session.isAdmin = newUser.isAdmin;
+        return res.status(201).json({ redirectUrl: '/', message: 'User created successfully' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -82,11 +83,12 @@ const loginUser = async (req, res) => {
             res.status(401).json({ message: 'Invalid password' });
 
         req.session.username = username;
-        res.status(200).json({ redirectUrl: '/' , message: 'User login successfully'});
+        req.session.isAdmin = user.isAdmin;
+        return res.status(200).json({ redirectUrl: '/' , message: 'User login successfully'});
 
     } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -94,8 +96,8 @@ module.exports = {
 
     loginUser,
     registerUser,
-    loginForm,
-    registerForm,
+    // loginForm,
+    // registerForm,
     isLoggedIn,
     logoutUser,
     isAdmin

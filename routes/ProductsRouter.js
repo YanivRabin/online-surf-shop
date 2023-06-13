@@ -3,14 +3,18 @@ const surfboardsController = require('../controllers/SurfboardsController');
 const { isLoggedIn, isAdmin } = require("../controllers/authController");
 
 
-router.get('/surfboards', isLoggedIn, surfboardsController.getAllSurfboards);
-router.post('/surfboards', isLoggedIn, isAdmin, surfboardsController.createSurfboard);
-router.put('/surfboards', isLoggedIn, isAdmin, surfboardsController.updateSurfboard);
-router.delete('/surfboards', isLoggedIn, isAdmin, surfboardsController.deleteSurfboard);
+// get the html and upload the data
+router.get('/surfboards', surfboardsController.getSurfboardsPage);
+router.get('/api/surfboards', surfboardsController.getAllSurfboards);
 
-// router.route('/:id')
-//     // update and delete surfboard only if you admin
-//     .put(verifyToken, authorizeAdmin, surfboardsController.updateSurfboard)
-//     .delete(verifyToken, authorizeAdmin, surfboardsController.deleteSurfboard)
+// create
+router.post('/surfboards', isLoggedIn, isAdmin, surfboardsController.createSurfboard);
+
+// update
+router.post('/surfboards/id', isLoggedIn, isAdmin, surfboardsController.getSurfboardById);
+router.put('/surfboards', isLoggedIn, isAdmin, surfboardsController.updateSurfboard);
+
+// delete
+router.delete('/surfboards', isLoggedIn, isAdmin, surfboardsController.deleteSurfboard);
 
 module.exports = router;

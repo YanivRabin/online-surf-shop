@@ -35,13 +35,14 @@
     </div>
     <br>
     <h1>Surfboards</h1>
-    <form id="fetchDataForm">
-        <button type="submit">show surfboards</button>
-    </form>
+    <a href="/store/surfboards" class="button">Show Surfboards</a>
 
-    <div id="dataContainer"></div>
+<!--    <form id="fetchDataForm">-->
+<!--        <button type="submit">show surfboards</button>-->
+<!--    </form>-->
+<!--    <div id="dataContainer"></div>-->
     <br>
-    <a href="chat">Chat</a>
+    <a href="/chat">Chat</a>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -105,26 +106,33 @@
                 });
             });
 
-            // write all surfboards below the button
-            $('#fetchDataForm').submit((event) => {
-
-                event.preventDefault(); // Prevent form submission
-                $.ajax({
-
-                    url: '/store/surfboards',
-                    method: 'GET',
-                    success: (response) => {
-
-                        const { surfboards } = response;
-                        $('#dataContainer').html(surfboards[0].company + ', ' + surfboards[0].model);
-                    },
-                    error: (error) => {
-                        console.log('Error:', error);
-                    }
-                });
-            });
-
-
+            // // write all surfboards below the button
+            // $('#fetchDataForm').submit((event) => {
+            //
+            //     event.preventDefault(); // Prevent form submission
+            //     $.ajax({
+            //
+            //         url: '/store/surfboards',
+            //         method: 'GET',
+            //         success: (response) => {
+            //
+            //             const { surfboards } = response;
+            //             $('#dataContainer').html(surfboards[0].company + ', ' + surfboards[0].model);
+            //         },
+            //         error: (xhr, error) => {
+            //
+            //             if (xhr.status === 401) {
+            //
+            //                 const jsonResponse = JSON.parse(xhr.responseText);
+            //                 const { redirectUrl, message } = jsonResponse;
+            //                 alert(message);
+            //                 window.location.href = redirectUrl;
+            //             }
+            //             else
+            //                 console.log('Error:', error);
+            //         }
+            //     });
+            // });
         });
     </script>
 
