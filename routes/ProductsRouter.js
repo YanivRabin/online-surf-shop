@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const surfboardsController = require('../controllers/SurfboardsController');
 const { isLoggedIn, isAdmin } = require("../controllers/authController");
+const cartController = require("../controllers/CartController");
 
 
 // get the html and upload the data
 router.get('/surfboards', surfboardsController.getSurfboardsPage);
 router.get('/api/surfboards', surfboardsController.getAllSurfboards);
+router.get('/api/cartItems',isLoggedIn, cartController.getCartItems);
 
 // create
 router.post('/surfboards', isLoggedIn, isAdmin, surfboardsController.createSurfboard);

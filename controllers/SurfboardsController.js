@@ -11,7 +11,8 @@ const getAllSurfboards = async (req, res) => {
     try {
         const surfboards = await Surfboard.find({});
         return res.json({ surfboards: surfboards });
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Failed to find surfboards:', error);
         return res.status(500).send('Internal Server Error');
     }
@@ -22,6 +23,7 @@ const createSurfboard = async (req, res) => {
     const { company, model, price, image, color, type, tail, height, width, thick, volume } = req.body;
 
     try {
+
         // Create a new surfboard object
         const newSurfboard = new Surfboard({
             company: company,
@@ -37,10 +39,10 @@ const createSurfboard = async (req, res) => {
             volume: Number(volume)
         });
 
-        // Save the surfboard to the database
         await newSurfboard.save();
         return res.status(201).json({ newSurfboard: newSurfboard });
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
@@ -63,7 +65,8 @@ const updateSurfboard = async (req, res) => {
             return res.status(404).json({ message: 'Surfboard not found' });
 
         return res.json({ updatedSurfboard: updatedSurfboard });
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
@@ -81,7 +84,8 @@ const deleteSurfboard = async (req, res) => {
             return res.status(404).json({ message: 'Surfboard not found' });
 
         return res.json({ message: 'Surfboard deleted successfully' });
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
@@ -91,13 +95,13 @@ const getSurfboardById = async (req, res) => {
 
     const { surfboardId } = req.body;
 
-
     try {
 
         const surfboard = await Surfboard.findById(surfboardId);
         return res.json({ surfboard: surfboard });
 
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }

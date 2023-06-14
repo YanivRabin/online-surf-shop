@@ -8,6 +8,7 @@ const http           = require('http')
 const homeRouter     = require('./routes/HomeRouter');
 const productsRouter = require('./routes/ProductsRouter');
 const authRouter     = require('./routes/AuthRouter')
+const cartRouter     = require('./routes/CartRouter');
 
 const app = express();
 const server = http.createServer(app);
@@ -23,7 +24,7 @@ app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    // cookie: { secure: true }
+    cookie: { maxAge:  24 * 60 * 60 * 1000 } // Set session expiration to 1 day (24 hours * 60 minutes * 60 seconds * 1000 milliseconds)
 }));
 
 
@@ -31,6 +32,8 @@ app.use(session({
 app.use('/', homeRouter);
 app.use('/auth', authRouter); // for login and register
 app.use('/store', productsRouter); // for surfboards and other products
+app.use('/cart', cartRouter);
+
 
 io.on('connection', (socket) => {
 

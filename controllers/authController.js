@@ -38,6 +38,7 @@ const registerUser = async (req, res) => {
     const { username, password } = req.body;
 
     try {
+
         // Check if the username already exist
         const existingUser = await User.findOne({ username: username } );
         if (existingUser)
@@ -52,13 +53,15 @@ const registerUser = async (req, res) => {
             username: username,
             password: hashedPassword
         });
+
         // Save the user to the database
         await newUser.save();
 
         req.session.username = username;
         req.session.isAdmin = newUser.isAdmin;
         return res.status(201).json({ redirectUrl: '/', message: 'User created successfully' });
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
@@ -85,8 +88,8 @@ const loginUser = async (req, res) => {
         req.session.username = username;
         req.session.isAdmin = user.isAdmin;
         return res.status(200).json({ redirectUrl: '/' , message: 'User login successfully'});
-
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
