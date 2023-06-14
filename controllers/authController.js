@@ -57,6 +57,8 @@ const registerUser = async (req, res) => {
 
         req.session.username = username;
         req.session.isAdmin = newUser.isAdmin;
+
+
         return res.status(201).json({ redirectUrl: '/', message: 'User created successfully' });
     } catch (error) {
         console.error(error);
@@ -64,28 +66,51 @@ const registerUser = async (req, res) => {
     }
 };
 
+// const loginUser = async (req, res) => {
+//
+//     const { username, password } = req.body;
+//
+//     try {
+//
+//         const user = await User.findOne({ username: username });
+//
+//         // Find the user by email
+//         if (!user)
+//             // redirect?? if yes then where
+//             res.status(404).json({ message: 'User not found'});
+//
+//         // Check if the provided password matches the stored password
+//         if (!bcrypt.compare(password, user.password))
+//             // redirect?? if yes then where
+//             res.status(401).json({ message: 'Invalid password' });
+//
+//
+//         req.session.username = username;
+//         console.log(req.session.username);
+//         req.session.isAdmin = user.isAdmin;
+//         return res.status(200).json({ redirectUrl: '/' , message: 'User login successfully'});
+//
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
 const loginUser = async (req, res) => {
-
     const { username, password } = req.body;
 
     try {
-
         const user = await User.findOne({ username: username });
 
-        // Find the user by email
         if (!user)
-            // redirect?? if yes then where
-            res.status(404).json({ message: 'User not found'});
+            return res.status(404).json({ message: 'User not found'});
 
-        // Check if the provided password matches the stored password
         if (!bcrypt.compare(password, user.password))
-            // redirect?? if yes then where
-            res.status(401).json({ message: 'Invalid password' });
+            return res.status(401).json({ message: 'Invalid password' });
 
         req.session.username = username;
         req.session.isAdmin = user.isAdmin;
-        return res.status(200).json({ redirectUrl: '/' , message: 'User login successfully'});
 
+        return res.status(200).json({ redirectUrl: '/', message: 'User login successfully'});
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });

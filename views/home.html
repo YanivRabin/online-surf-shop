@@ -49,18 +49,32 @@
     <script>
 
         $(document).ready(() => {
-
-            $('#register').submit((event) => {
-
+            $('#login').submit((event) => {
                 event.preventDefault(); // Prevent form submission
                 $.ajax({
+                    url: '/auth/login',
+                    method: 'POST',
+                    data: $('#login').serialize(),
+                    success: (response) => {
+                        const { redirectUrl } = response;
+                        sessionStorage.setItem('username', $('#login-username').val());
+                        window.location.href = redirectUrl;
+                    },
+                    error: (error) => {
+                        console.log('Error:', error);
+                    }
+                });
+            });
 
+            $('#register').submit((event) => {
+                event.preventDefault(); // Prevent form submission
+                $.ajax({
                     url: '/auth/register',
                     method: 'POST',
                     data: $('#register').serialize(),
                     success: (response) => {
-
                         const { redirectUrl } = response;
+                        sessionStorage.setItem('username', $('#register-username').val());
                         window.location.href = redirectUrl;
                     },
                     error: (error) => {
@@ -68,36 +82,14 @@
                     }
                 });
             });
-
-            $('#login').submit((event) => {
-
-                event.preventDefault(); // Prevent form submission
-                $.ajax({
-
-                    url: '/auth/login',
-                    method: 'POST',
-                    data: $('#login').serialize(),
-                    success: (response) => {
-
-                        const { redirectUrl } = response;
-                        window.location.href = redirectUrl;
-                    },
-                    error: (error) => {
-                        console.log('Error:', error);
-                    }
-                });
-            });
-
             $('#logout').submit((event) => {
-
                 event.preventDefault(); // Prevent form submission
                 $.ajax({
-
                     url: '/auth/logout',
                     method: 'POST',
                     success: (response) => {
-
                         const { redirectUrl } = response;
+                        sessionStorage.removeItem('username');
                         window.location.href = redirectUrl;
                     },
                     error: (error) => {
@@ -105,6 +97,63 @@
                     }
                 });
             });
+
+            // $('#register').submit((event) => {
+            //
+            //     event.preventDefault(); // Prevent form submission
+            //     $.ajax({
+            //
+            //         url: '/auth/register',
+            //         method: 'POST',
+            //         data: $('#register').serialize(),
+            //         success: (response) => {
+            //
+            //             const { redirectUrl } = response;
+            //             window.location.href = redirectUrl;
+            //         },
+            //         error: (error) => {
+            //             console.log('Error:', error.message);
+            //         }
+            //     });
+            // });
+            //
+            // $('#login').submit((event) => {
+            //
+            //     event.preventDefault(); // Prevent form submission
+            //     $.ajax({
+            //
+            //         url: '/auth/login',
+            //         method: 'POST',
+            //         data: $('#login').serialize(),
+            //         success: (response) => {
+            //
+            //             const { redirectUrl } = response;
+            //             window.location.href = redirectUrl;
+            //         },
+            //         error: (error) => {
+            //             console.log('Error:', error);
+            //         }
+            //     });
+            // });
+            //
+            // $('#logout').submit((event) => {
+            //
+            //     event.preventDefault(); // Prevent form submission
+            //     $.ajax({
+            //
+            //         url: '/auth/logout',
+            //         method: 'POST',
+            //         success: (response) => {
+            //             const { redirectUrl } = response;
+            //             sessionStorage.setItem('username', $('#login-username').val());
+            //             window.location.href = redirectUrl;
+            //         },
+            //
+            //         error: (error) => {
+            //             console.log('Error:', error);
+            //         }
+            //     });
+            // });
 
             // // write all surfboards below the button
             // $('#fetchDataForm').submit((event) => {

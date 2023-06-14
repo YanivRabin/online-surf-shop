@@ -38,15 +38,19 @@ app.use('/chat', (req, res) => {
 
 io.on('connection', (socket) => {
 
-    socket.broadcast.emit('joined', socket.username + ' Joined');
+    socket.on('joined', (username) => {
+        socket.username = username; // save username to socket object
+        socket.broadcast.emit('joined', socket.username + ' Joined');
+    });
 
     socket.on('disconnect', () => {
         socket.broadcast.emit('disconnected', socket.username+' Disconnected');
     });
 
-    socket.on('new message', (msg) => {
-        io.emit('new message', socket.username + ': ' + msg);
+    socket.on('new message', (data) => {
+        io.emit('new message', data);
     });
+
 });
 
 
