@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Popup Window</title>
+  <style>
+    /* Chat popup styles */
+    .chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      right: 30px;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+      max-width: 300px;
+      padding: 10px;
+    }
+
+    .open-button {
+      background-color: #555;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      opacity: 0.8;
+      position: fixed;
+      bottom: 23px;
+      right: 30px;
+      font-size: 14px;
+    }
+
+    .open-button:hover {
+      opacity: 1;
+    }
+
+    .form-container {
+      max-width: 300px;
+      padding: 10px;
+      background-color: white;
+    }
+
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px 0;
+      border: none;
+      background: #f1f1f1;
+      resize: none;
+      min-height: 50px;
+    }
+
+    .form-container .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    .form-container .btn:hover,
+    .form-container .btn:focus {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+<h1>Chat Popup Window Example</h1>
+
+<button class="open-button" onclick="openChat()">Open Chat</button>
+
+<div class="chat-popup" id="chatPopup">
+  <div class="form-container">
+    <h2>Chat</h2>
+
+    <textarea placeholder="Type your message here..." id="messageInput" required></textarea>
+
+    <button type="submit" class="btn" onclick="sendMessage()">Send</button>
+    <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
+  </div>
+</div>
+
+<script>
+  function openChat() {
+    document.getElementById("chatPopup").style.display = "block";
+  }
+
+  function closeChat() {
+    document.getElementById("chatPopup").style.display = "none";
+  }
+
+  function sendMessage() {
+    var message = document.getElementById("messageInput").value;
+    // Code to handle the sent message (e.g., send it to a server or display it on the page)
+    console.log("Message sent:", message);
+    // Clear the input field
+    document.getElementById("messageInput").value = "";
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    openChat();
+  });
+</script>
+</body>
+
+</html>

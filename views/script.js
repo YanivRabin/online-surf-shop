@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+
     // Function to add the product to the cart
     function addToCart(name, price) {
         // Create a new product object
@@ -53,5 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
       `;
             cartItemsContainer.appendChild(productElement);
         });
+    }
+
+
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
     }
 });
