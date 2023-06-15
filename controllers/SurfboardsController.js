@@ -110,7 +110,6 @@ const getSurfboardById = async (req, res) => {
 const getSurfboardsByFilter = async (req, res) => {
 
     const { type, color } = req.query;
-    console.log(type, color)
 
     // if there were filters and then unchecked all of them
     if (typeof type === 'undefined' && typeof color === 'undefined')

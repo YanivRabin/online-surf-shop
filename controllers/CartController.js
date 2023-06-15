@@ -66,13 +66,7 @@ const getCartItems = async (req, res) => {
         if (!cart)
             return res.json({ products: [], totalPrice: 0 });
 
-        return res.json({ products: cart.products, totalPrice: cart.totalPrice });
-        // return res.json({ cart: cart });
-        //
-        //
-        // need to change
-        //
-        //
+        return res.json({ cart: cart });
     }
     catch (error) {
         console.error('Failed to find items:', error);
@@ -121,10 +115,7 @@ const updateCartItem = async (req, res) => {
 
             const updatedCartProduct = await Cart.findOneAndUpdate(
                 { username: username, 'products.productId': productId },
-                { $set: {
-                            'products.$.quantity': Number(quantity),
-                            // 'products.$.price': Number(surfboardPrice),
-                        }},
+                { $set: { 'products.$.quantity': Number(quantity) } },
                 { new: true }
             );
 

@@ -14,7 +14,7 @@ router.get('/filterSurfboards', surfboardsController.getSurfboardsByFilter);
 router.post('/createSurfboard', isLoggedIn, isAdmin, surfboardsController.createSurfboard);
 
 // get a single surfboard and update
-router.post('/getOneSurfboard', isLoggedIn, isAdmin, surfboardsController.getSurfboardById);
+router.post('/getOneSurfboard', surfboardsController.getSurfboardById);
 router.put('/updateSurfboard', isLoggedIn, isAdmin, surfboardsController.updateSurfboard);
 
 // delete

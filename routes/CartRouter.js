@@ -4,7 +4,7 @@ const { isLoggedIn } = require("../controllers/AuthController");
 
 
 // get
-router.get('/cartItems',isLoggedIn, cartController.getCartItems);
+router.get('/getItems',isLoggedIn, cartController.getCartItems);
 
 // add
 router.post('/add', isLoggedIn, cartController.addToCart);

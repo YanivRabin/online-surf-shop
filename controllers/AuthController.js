@@ -13,7 +13,7 @@ const bcrypt = require('bcrypt');
 const isLoggedIn = async (req, res, next) => {
 
     if (!req.session.username)
-        return res.status(401).json({ redirectUrl: '/', message: 'User is not connected' });
+        return res.status(401).json({ message: 'User is not connected' });
 
     return next();
 }
@@ -21,7 +21,7 @@ const isLoggedIn = async (req, res, next) => {
 const isAdmin = async (req, res, next) => {
 
     if (!req.session.isAdmin)
-        return res.status(403).json({ redirectUrl: '/', message: 'Unauthorized' });
+        return res.status(403).json({ message: 'Unauthorized' });
 
     return next();
 }
@@ -29,13 +29,14 @@ const isAdmin = async (req, res, next) => {
 const logoutUser = async (req, res) => {
 
     req.session.destroy(() => {
-        return res.status(200).json({ redirectUrl: '/', message: 'User logout successfully' });
+        return res.status(200).json({ message: 'User logout successfully' });
     });
 }
 
 const registerUser = async (req, res) => {
 
-    const { username, password } = req.body;
+    let { username, password } = req.body;
+    username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
 
     try {
 
@@ -53,15 +54,14 @@ const registerUser = async (req, res) => {
             username: username,
             password: hashedPassword
         });
-
-        // Save the user to the database
         await newUser.save();
 
         req.session.username = username;
         req.session.isAdmin = newUser.isAdmin;
-        return res.status(201).json({ redirectUrl: '/', message: 'User created successfully' });
+        return res.status(201).json({ message: 'User created successfully' });
     }
     catch (error) {
+
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
@@ -69,31 +69,42 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
 
-    const { username, password } = req.body;
+    let { username, password } = req.body;
+    username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
 
     try {
 
         const user = await User.findOne({ username: username });
 
-        // Find the user by email
         if (!user)
-            // redirect?? if yes then where
             res.status(404).json({ message: 'User not found'});
 
         // Check if the provided password matches the stored password
         if (!bcrypt.compare(password, user.password))
-            // redirect?? if yes then where
-            res.status(401).json({ message: 'Invalid password' });
+            res.status(400).json({ message: 'Invalid password' });
 
         req.session.username = username;
         req.session.isAdmin = user.isAdmin;
-        return res.status(200).json({ redirectUrl: '/' , message: 'User login successfully'});
+        return res.status(200).json({ message: 'User login successfully'});
     }
     catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+const getAllUsers = async (req, res) => {
+
+    try {
+
+        const users = await User.find({});
+        res.status(200).json({ users: users });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
 module.exports = {
 
@@ -103,5 +114,6 @@ module.exports = {
     // registerForm,
     isLoggedIn,
     logoutUser,
-    isAdmin
+    isAdmin,
+    getAllUsers
 }

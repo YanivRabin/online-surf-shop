@@ -176,14 +176,14 @@
 
                 $.ajax({
 
-                    url: "/cart/cartItems",
+                    url: "/cart/getItems",
                     method: 'get',
                     success: (response) => {
 
-                        const { products, totalPrice } = response;
+                        const { cart } = response;
 
                         $('#cart-list').empty();  // Clear the existing list
-                        products.forEach((product) => {
+                        cart.products.forEach((product) => {
 
                             const listItem = $('<li>company: ' + product.productId.company + ', model: ' + product.productId.model +
                                                ', amount:' + product.quantity + ', price: ' +
@@ -214,7 +214,7 @@
                             $('#cart-list').append(listItem);
                         });
 
-                        $('#total-price').text("Total price: " + totalPrice + "$");
+                        $('#total-price').text("Total price: " + cart.totalPrice + "$");
                     },
                     error: (error) => {
                         console.log('Error:', error);
@@ -445,7 +445,7 @@
             // get cart items
             $.ajax({
 
-                url: "/cart/cartItems",
+                url: "/cart/getItems",
                 method: 'get',
                 success: () => {
 
