@@ -18,14 +18,15 @@
 </head>
 
 <body style="color: rgb(0,0,0);background: rgb(5,16,20);">
-    <section class="d-flex flex-column justify-content-between" style="width: 100%;height: 100vh;background: url(&quot;assets/img/beautiful-scenic-view-sea-cloudy-gloomy-sky_181624-4762.jpg.avif&quot;) center / cover no-repeat, #ffffff;transform: perspective(0px);">
+
+    <section class="d-flex flex-column justify-content-between" style="width: 100%;height: 100vh;background: url(assets/img/beautiful-scenic-view-sea-cloudy-gloomy-sky_181624-4762.jpg.avif) center / cover no-repeat, #ffffff;transform: perspective(0px);">
         <div id="hero-top">
             <nav class="navbar navbar-light navbar-expand-md" style="/*background: var(--bs-navbar-toggler-border-color);*/">
                 <div class="container-fluid"><a class="navbar-brand" href="HomePage.html" style="width: 0px;padding-left: 0px;padding-bottom: 30px;height: 0px;padding-top: 0px;padding-right: 0px;margin: 0px;margin-bottom: 0;transform: perspective(410px) translate(0px) scale(1.43);font-family: Montserrat, sans-serif;--bs-body-bg: var(--bs-navbar-color);color: rgb(255,255,255);font-weight: bold;"><span style="font-weight: normal !important; color: rgb(0, 0, 0);">EL MAR</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navcol-2" style="/*background: var(--bs-nav-link-disabled-color);*//*--bs-body-bg: var(--bs-navbar-toggler-border-color);*/color: rgb(0,0,0);">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-search" style="color: #414141;transform: scale(1.15);"></i></a></li>
-                            <li class="nav-item"><a class="nav-link active" href="#" style="--bs-body-color: #c3d3e4;color: rgba(255,255,255,0.9);font-weight: bold;"><i class="fa fa-user-circle" style="transform: scale(1.15);color: rgba(0,0,0,0.9);" onclick="location.href=&#39;login.html&#39;"></i></a></li>
+                            <li class="nav-item"><a class="nav-link active" href="#" style="--bs-body-color: #c3d3e4;color: rgba(255,255,255,0.9);font-weight: bold;"><i class="fa fa-user-circle" style="transform: scale(1.15);color: rgba(0,0,0,0.9);" onclick="location.href=#39;login.html&#39;"></i></a></li>
                             <li class="nav-item"><a class="nav-link" href="#" style="color: rgba(255,255,255,0.55);font-weight: bold;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" style="transform: scale(1.15);color: #414141;">
                                         <path d="M2 3C2 2.44772 2.44772 2 3 2H5.15287C5.64171 2 6.0589 2.35341 6.13927 2.8356L6.87858 7.27147C6.95075 7.70451 6.73206 8.13397 6.3394 8.3303L4.79126 9.10437C5.90756 11.8783 8.12168 14.0924 10.8956 15.2087L11.6697 13.6606C11.866 13.2679 12.2955 13.0492 12.7285 13.1214L17.1644 13.8607C17.6466 13.9411 18 14.3583 18 14.8471V17C18 17.5523 17.5523 18 17 18H15C7.8203 18 2 12.1797 2 5V3Z" fill="currentColor"></path>
                                     </svg></a></li>
@@ -35,41 +36,89 @@
                 </div>
             </nav>
             <div class="col" data-aos="fade-up" data-aos-delay="500">
+                <section class="filter-menu">
+                    <h2>Filters</h2>
+                    <label for="size-filter">Size:</label>
+                    <select id="size-filter">
+                        <option value="all">All</option>
+                        <option value="4 6">4 6</option>
+                        <option value="4 8">4 8</option>
+                        <option value="5 0">5 0</option>
+                    </select>
+
+                    <label for="Volume">Volume:</label>
+                    <select id="Volume">
+                        <option value="all">All</option>
+                        <option value="25L-30L">25L-30L</option>
+                        <option value="30L-35L">30L-35L</option>
+                        <option value="35L-40L">35L-40L</option>
+                    </select>
+
+
+                    <label for="Board type">Board type:</label>
+                    <select id="Board type">
+                        <option value="all">All</option>
+                        <option value="Soft">Soft</option>
+                        <option value="Grom">Grom</option>
+                        <option value="Fish">Fish</option>
+                    </select>
+                </section>
                 <h1 style="font-family: Montserrat, sans-serif;text-align: center;color: rgb(78,78,78);font-size: 20px;margin-top: 50px;"><span style="color: rgb(0, 0, 0);">OUR MODELS</span></h1>
             </div>
+
+            <section class="product-container">
+
             <section style="height: 350px;margin-top: 50px;">
+
                 <div class="row" style="height: 150px;">
+
                     <div class="col" data-aos="fade-up" data-aos-delay="500" style="text-align: center;">
-                        <h1 style="font-size: 15px;text-align: center;font-family: Montserrat, sans-serif;">Modern 2.5</h1><button class="btn btn-primary" type="button" style="background: url(&quot;assets/img/Modern2.5/sharpeyesurfboards_us_2019_modern2-5.png&quot;) center / cover no-repeat;height: 200px;width: 150px;border-color: rgba(0,0,0,0);"></button>
+                        <div class="product-card" data-Board type="Fish" data-size="4 6" data-Volume="25L-30L">
+
+                        <h1 style="font-size: 15px;text-align: center;font-family: Montserrat, sans-serif;">Modern 2.5</h1><button class="btn btn-primary" type="button" style="background: url(assets/img/Modern2.5/sharpeyesurfboards_us_2019_modern2-5.png) center / cover no-repeat;height: 200px;width: 150px;border-color: rgba(0,0,0,0);"></button>
                         <p style="font-size: 15px;font-family: Montserrat, sans-serif;margin-top: 10px;">Price : <i class="fa fa-dollar"></i>&nbsp;780&nbsp;</p>
                         <div class="row" id="add-cart">
                             <div class="col"><button class="btn btn-primary" type="button" style="background: rgba(155,158,163,0);color: rgb(0,0,0);transform: perspective(0px) skew(0deg);border-color: rgb(0,0,0);font-family: Montserrat, sans-serif;text-align: center;border-radius: 8px;box-shadow: 0px 0px 20px 1px;">Add to Cart</button></div>
                         </div>
                     </div>
+                </div>
+
                     <div class="col" data-aos="fade-up" data-aos-delay="500" style="text-align: center;border-color: rgba(255,255,255,0);border: 1px solid black;border-top: 0;border-bottom: 0;border-right: 0;">
-                        <h1 style="font-size: 15px;text-align: center;font-family: Montserrat, sans-serif;">#77</h1><button class="btn btn-primary" type="button" style="background: url(&quot;assets/img/77/77_allSides.png&quot;) center / cover no-repeat;width: 150px;height: 200px;border-color: rgba(0,0,0,0);"></button>
+
+                        <div class="product-card" data-Board type="Grom" data-size="4 8" data-Volume="25L-30L">
+
+                        <h1 style="font-size: 15px;text-align: center;font-family: Montserrat, sans-serif;">#77</h1><button class="btn btn-primary" type="button" style="   background: url(assets/img/77/77_allSides.png) center / cover no-repeat;width: 150px;height: 200px;border-color: rgba(0,0,0,0);"></button>
                         <p style="font-size: 15px;font-family: Montserrat, sans-serif;margin-top: 10px;">Price : <i class="fa fa-dollar"></i>&nbsp;780 </p>
                         <div class="row" id="add-cart-1">
                             <div class="col"><button class="btn btn-primary" type="button" style="background: rgba(155,158,163,0);color: rgb(0,0,0);transform: perspective(0px) skew(0deg);border-color: rgb(0,0,0);font-family: Montserrat, sans-serif;text-align: center;border-radius: 8px;box-shadow: 0px 0px 20px 1px;">Add to Cart</button></div>
                         </div>
                     </div>
+                    </div>
                     <div class="col with-borders" data-aos="fade-up" data-aos-delay="500" style="text-align: center;border-color: rgba(255,255,255,0);border: 1px solid black;border-top: 0;border-bottom: 0;">
-                        <h1 style="font-size: 15px;text-align: center;font-family: Montserrat, sans-serif;">Storm Twin Turbo</h1><button class="btn btn-primary" type="button" style="width: 150px;height: 200px;background: url(&quot;assets/img/Stormst2/stormst2_allSides.png&quot;) center / cover no-repeat;border-color: rgba(0,0,0,0);"></button>
+                        <div class="product-card" data-Board type="Fish" data-size="5 0" data-Volume="30L-35L">
+
+                        <h1 style="font-size: 15px;text-align: center;font-family: Montserrat, sans-serif;">Storm Twin Turbo</h1><button class="btn btn-primary" type="button" style="width: 150px;height: 200px;background: url(assets/img/Stormst2/stormst2_allSides.png) center / cover no-repeat;border-color: rgba(0,0,0,0);"></button>
                         <p style="font-size: 15px;font-family: Montserrat, sans-serif;margin-top: 10px;">Price : <i class="fa fa-dollar"></i>&nbsp;780&nbsp;</p>
                         <div class="row" id="add-cart-2">
                             <div class="col"><button class="btn btn-primary" type="button" style="background: rgba(155,158,163,0);color: rgb(0,0,0);transform: perspective(0px) skew(0deg);border-color: rgb(0,0,0);font-family: Montserrat, sans-serif;text-align: center;border-radius: 8px;box-shadow: 0px 0px 20px 1px;">Add to Cart</button></div>
                         </div>
+                        </div>
+
                     </div>
                     <div class="col" data-aos="fade-up" data-aos-delay="500" style="text-align: center;">
-                        <h1 style="font-size: 15px;text-align: center;font-family: Montserrat, sans-serif;">Disco</h1><button class="btn btn-primary" type="button" style="width: 150px;height: 200px;background: url(&quot;assets/img/Disco/disco_allSides.png&quot;) center / cover;border-color: rgba(0,0,0,0);"></button>
+                        <div class="product-card" data-Board type="Fish" data-size="5 0" data-Volume="30L-35L">
+                        <h1 style="font-size: 15px;text-align: center;font-family: Montserrat, sans-serif;">Disco</h1><button class="btn btn-primary" type="button" style="width: 150px;height: 200px;background: url(assets/img/Disco/disco_allSides.png) center / cover;border-color: rgba(0,0,0,0);"></button>
                         <p style="font-size: 15px;font-family: Montserrat, sans-serif;margin-top: 10px;">Price : <i class="fa fa-dollar"></i>&nbsp;780&nbsp;</p>
                         <div class="row" id="add-cart-3">
                             <div class="col"><button class="btn btn-primary" type="button" style="background: rgba(155,158,163,0);color: rgb(0,0,0);transform: perspective(0px) skew(0deg);border-color: rgb(0,0,0);font-family: Montserrat, sans-serif;text-align: center;border-radius: 8px;box-shadow: 0px 0px 20px 1px;">Add to Cart</button></div>
                         </div>
                     </div>
                 </div>
+                </div>
             </section>
-        </div>
+            </section>
+
+
         <div id="hero-buttom" style="margin-bottom: 50px;">
             <div class="row">
                 <div class="col" data-aos="fade-up" data-aos-delay="500" style="text-align: center;">
@@ -110,7 +159,11 @@
                 </div>
             </div>
         </div>
+        </div>
     </section>
+
+
+    <script src="script.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/aos.min.js"></script>
     <script src="assets/js/bs-init.js"></script>

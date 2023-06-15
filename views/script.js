@@ -1,67 +1,34 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Get a reference to the "Add to Cart" buttons
-    const addToCartBtns = document.querySelectorAll('.add-to-cart');
+// Get the filter elements
+const sizeFilter = document.getElementById('size-filter');
+const volumeFilter = document.getElementById('Volume');
+const boardTypeFilter = document.getElementById('Board type');
 
-    // Add a click event listener to each "Add to Cart" button
-    addToCartBtns.forEach(function(btn) {
-        btn.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
+// Add event listeners to the filter elements
+sizeFilter.addEventListener('change', filterProducts);
+volumeFilter.addEventListener('change', filterProducts);
+boardTypeFilter.addEventListener('change', filterProducts);
 
-            // Retrieve the product information
-            const productCard = event.target.closest('.product-card');
-            const productName = productCard.querySelector('h3').textContent;
-            const productPrice = productCard.querySelector('.product-price').textContent;
+// Filter products based on selected options
+function filterProducts() {
+    const selectedSize = sizeFilter.value;
+    const selectedVolume = volumeFilter.value;
+    const selectedBoardType = boardTypeFilter.value;
 
-            // Perform the necessary actions to add the product to the cart
-            addToCart(productName, productPrice);
-        });
-    });
+    const productCards = document.getElementsByClassName('product-card');
 
+    for (const card of productCards) {
+        const cardSize = card.getAttribute('data-size');
+        const cardVolume = card.getAttribute('data-Volume');
+        const cardBoardType = card.getAttribute('data-Board type');
 
-    // Function to add the product to the cart
-    function addToCart(name, price) {
-        // Create a new product object
-        const product = {
-            name: name,
-            price: price
-        };
-
-        // Retrieve the existing cart data from localStorage
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Add the product to the cart
-        cart.push(product);
-
-        // Store the updated cart data in localStorage
-        localStorage.setItem('cart', JSON.stringify(cart));
+        if (
+            (selectedSize === 'all' || cardSize === selectedSize) &&
+            (selectedVolume === 'all' || cardVolume === selectedVolume) &&
+            (selectedBoardType === 'all' || cardBoardType === selectedBoardType)
+        ) {
+            card.style.display = 'block'; // Show the product card
+        } else {
+            card.style.display = 'none'; // Hide the product card
+        }
     }
-
-    // Cart page functionality
-    if (window.location.pathname === '/cart.html') {
-        // Get the cart items container
-        const cartItemsContainer = document.getElementById('cart-items');
-
-        // Retrieve the cart data from localStorage
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Loop through the cart items and display them
-        cart.forEach(function(product) {
-            const productElement = document.createElement('div');
-            productElement.classList.add('cart-product');
-            productElement.innerHTML = `
-        <span class="cart-product-name">${product.name}</span>
-        <span class="cart-product-price">${product.price}</span>
-      `;
-            cartItemsContainer.appendChild(productElement);
-        });
-    }
-
-
-    function openForm() {
-        document.getElementById("myForm").style.display = "block";
-    }
-
-    function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-    }
-});
+}
