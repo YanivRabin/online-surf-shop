@@ -8,6 +8,8 @@ const http           = require('http')
 const homeRouter     = require('./routes/HomeRouter');
 const productsRouter = require('./routes/ProductsRouter');
 const authRouter     = require('./routes/AuthRouter')
+const storeRouter = require('./routes/storeRouter');
+
 
 const app = express();
 const server = http.createServer(app);
@@ -31,10 +33,14 @@ app.use(session({
 app.use('/', homeRouter);
 app.use('/auth', authRouter); // for login and register
 app.use('/store', productsRouter); // for surfboards and other products
+app.use('/branches', storeRouter); // for GoogleMaps Branches
+app.use('/chat', homeRouter);
+
 // app.use('/surfboards', surfboardsRouter);
-app.use('/chat', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/chat.html'));
-});
+
+// app.use('/chat', (req, res) => {
+//     res.sendFile(path.join(__dirname, './views/chat.html'));
+// });
 
 io.on('connection', (socket) => {
 
