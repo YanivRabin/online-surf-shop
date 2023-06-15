@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const cartController = require('../controllers/cartController');
-const { isLoggedIn } = require("../controllers/authController");
+const { isLoggedIn } = require("../controllers/AuthController");
 
 
 // get
-// router.get('/api/cartItems', cartController.getCartItems);
+router.get('/cartItems',isLoggedIn, cartController.getCartItems);
 
 // add
 router.post('/add', isLoggedIn, cartController.addToCart);

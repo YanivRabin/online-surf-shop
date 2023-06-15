@@ -6,12 +6,44 @@
 </head>
 <body>
 
-    <h1>surfboards</h1>
-    <ul id="surfboards-list"></ul>
+    <form id="surfboards">
+        <h1>surfboards</h1>
+        <ul id="surfboards-list"></ul>
+
+        <p>Type:
+        <label>
+            <input type="checkbox" id="Fish" value="type">
+            Fish
+        </label>
+        <label>
+            <input type="checkbox" id="Short" value="type">
+            Short
+        </label>
+        <label>
+            <input type="checkbox" id="Hybrid" value="type">
+            Hybrid
+        </label>
+        </p>
+
+        <p>Color:
+        <label>
+            <input type="checkbox" id="White" value="color">
+            White
+        </label>
+        <label>
+            <input type="checkbox" id="Black" value="color">
+            Black
+        </label>
+        <label>
+            <input type="checkbox" id="Blue" value="color">
+            Blue
+        </label>
+        </p>
+    </form>
     <br>
 
     <form id="create">
-        <h1>create</h1>
+        <h1>Create  ( Admin )</h1>
         <label><input type="text" name="company" required>company</label><br>
         <label><input type="text" name="model" required>model</label><br>
         <label><input type="text" name="price" required>price</label><br>
@@ -28,13 +60,13 @@
     <br>
 
     <form id="delete">
-        <h1>delete</h1>
+        <h1>Delete  ( Admin )</h1>
         <label><input type="text" id="surfboardId" name="surfboardId" required>id</label><br>
         <button type="submit">delete</button>
     </form>
     <br>
 
-    <h1>update</h1>
+    <h1>Update  ( Admin )</h1>
     <form id="fetch">
         <label><input type="text" id="surfboardId-update" name="surfboardId" required>id</label><br>
         <button type="submit">fetch</button>
@@ -56,9 +88,31 @@
     </form>
     <br>
 
-    <h1>Cart</h1>
-    <ul id="cart-list"></ul>
-    <h4 id="total-price">Total price: 0$</h4>
+    <form id="complete-order">
+        <h1>Cart</h1>
+        <ul id="cart-list"></ul>
+        <h4 id="total-price">Total price: 0$</h4>
+        <button type="submit">Complete order</button>
+        <br>
+    </form>
+    <br>
+
+    <h1>Order complete</h1>
+    <ul id="last-order"></ul>
+    <br>
+
+    <form id="history">
+        <h1>My orders history</h1>
+        <button type="submit">Show my orders history</button>
+        <ul id="order-history"></ul>
+    </form>
+    <br>
+
+    <form id="allHistory">
+        <h1>All orders history ( Admin )</h1>
+        <button type="submit">Show all orders history</button>
+        <ul id="all-orders-history"></ul>
+    </form>
     <br>
 
 
@@ -68,12 +122,61 @@
 
         $(document).ready(function() {
 
+            // check box changed functions
+            $("#Fish").change(function() { getItemsByFilter() });
+            $("#Short").change(function() { getItemsByFilter() });
+            $("#Hybrid").change(function() { getItemsByFilter() });
+            $("#White").change(function() { getItemsByFilter() });
+            $("#Black").change(function() { getItemsByFilter() });
+            $("#Blue").change(function() { getItemsByFilter() });
+            function getItemsByFilter() {
+                // Get all checked checkboxes
+                let checkedCheckboxes = $('input[type="checkbox"]:checked');
+                let type = [];
+                let color = [];
+
+                checkedCheckboxes.each(function() {
+                    if ($(this).attr('value') === 'type')
+                        type.push($(this).attr('id'));
+
+                    if ($(this).attr('value') === 'color')
+                        color.push($(this).attr('id'));
+                });
+
+                $.ajax({
+
+                    url: "/store/filterSurfboards",
+                    method: "get",
+                    data: { type, color },
+                    success: (response) => {
+
+                        const { surfboards } = response;
+
+                        $('#surfboards-list').empty();  // Clear the existing list
+                        surfboards.forEach((surfboard) => {
+
+                            const listItem = $('<li>' + surfboard.company + ', ' + surfboard.model + ', ' + surfboard.price + '$, ' + surfboard._id + '</li>');
+                            const addButton = $('<button type="button">Add to Cart</button>');
+                            addButton.click(function() {
+                                addToCart(surfboard._id, surfboard.price);  // Call the addToCart function with the surfboard ID
+                            });
+                            listItem.append(addButton);
+                            $('#surfboards-list').append(listItem);
+                        });
+                    },
+                    error: (error) => {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+
             // get cart items
             function getItems() {
 
                 $.ajax({
 
-                    url: "/store/api/cartItems",
+                    url: "/cart/cartItems",
                     method: 'get',
                     success: (response) => {
 
@@ -82,7 +185,9 @@
                         $('#cart-list').empty();  // Clear the existing list
                         products.forEach((product) => {
 
-                            const listItem = $('<li>' + product.productId.company + ', ' + product.productId.model + ', ' + product.quantity + '</li>');
+                            const listItem = $('<li>company: ' + product.productId.company + ', model: ' + product.productId.model +
+                                               ', amount:' + product.quantity + ', price: ' +
+                                                Number(product.quantity) * Number(product.productId.price) + '$ </li>');
 
                             // add to cart
                             const addButton = $('<button type="button">Remove from cart</button>');
@@ -94,14 +199,14 @@
                             // plus 1 to item quantity
                             const plusButton = $('<button type="button">+</button>');
                             plusButton.click(function() {
-                                updateItem(product.productId, product.quantity + 1, product.price);
+                                updateItem(product.productId, product.quantity + 1, product.productId.price);
                             });
                             listItem.append(plusButton);
 
                             // minus 1 to item quantity
                             const minusButton = $('<button type="button">-</button>');
                             minusButton.click(function() {
-                                updateItem(product.productId, product.quantity - 1, product.price);
+                                updateItem(product.productId, product.quantity - 1, product.productId.price);
                             });
                             listItem.append(minusButton);
 
@@ -139,7 +244,7 @@
             // upload surfboards when getting the html
             $.ajax({
 
-                url: "/store/api/surfboards",
+                url: "/store/surfboards",
                 method: 'get',
                 success: (response) => {
 
@@ -168,7 +273,7 @@
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
-                    url:"/store/surfboards",
+                    url:"/store/createSurfboard",
                     data: $('#create').serialize(),
                     success: function(response) {
 
@@ -204,7 +309,7 @@
                 e.preventDefault();
                 $.ajax({
                     type: "DELETE",
-                    url:"/store/surfboards",
+                    url:"/store/deleteSurfboard",
                     data: $('#delete').serialize(),
                     success: function() {
 
@@ -233,7 +338,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: '/store/surfboards/id',
+                    url: '/store/getOneSurfboard',
                     data: $('#fetch').serialize(),
                     success: function (response) {
 
@@ -273,7 +378,7 @@
                 e.preventDefault();
                 $.ajax({
                     type: "put",
-                    url: '/store/surfboards/',
+                    url: '/store/updateSurfboard',
                     data: $('#update').serialize(),
                     success: function (response) {
 
@@ -340,7 +445,7 @@
             // get cart items
             $.ajax({
 
-                url: "/store/api/cartItems",
+                url: "/cart/cartItems",
                 method: 'get',
                 success: () => {
 
@@ -349,6 +454,96 @@
                 error: (error) => {
                     console.log('Error:', error);
                 }
+            });
+
+
+            $('#complete-order').submit(function(e) {
+
+                e.preventDefault();
+                $.ajax({
+                    type: "post",
+                    url: '/order/completeOrder',
+                    success: function (response) {
+
+                        getItems();
+
+                        const { order } = response;
+                        $('#last-order').empty();  // Clear the existing list
+                        order.products.forEach((product) => {
+
+                            const listItem = $('<li>' + product.productId.company + ', ' + product.productId.model +
+                                               ', ' + product.productId.price + '$, amount:' + product.quantity + '</li>');
+                            $('#last-order').append(listItem);
+                        });
+                    },
+                    error: (error) => {
+
+                        alert('Error:' + error);
+                    }
+                });
+            });
+
+            // order history of a user
+            $('#history').submit(function(e) {
+
+                e.preventDefault();
+                $.ajax({
+                    type: "post",
+                    url: '/order/history',
+                    success: function (response) {
+
+                        const { orders } = response;
+                        $('#order-history').empty();  // Clear the existing list
+
+                        let i = 1;
+                        orders.forEach((order) => {
+
+                            $('#order-history').append('<h4>Order: ' + i + ' ' + 'Username: ' + order.username + '</h4>');
+
+                            order.products.forEach((product) => {
+
+                                const listItem = $('<li>' + product.productId.company + ', ' + product.productId.model +
+                                    ', ' + product.productId.price + '$, amount:' + product.quantity + '</li>');
+                                $('#order-history').append(listItem);
+                            });
+                            i++;
+                        });
+                    },
+                    error: (error) => {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+            // all the history for an admin
+            $('#allHistory').submit(function(e) {
+
+                e.preventDefault();
+                $.ajax({
+                    type: "post",
+                    url: '/order/allHistory',
+                    success: function (response) {
+
+                        const { orders } = response;
+                        $('#all-orders-history').empty();  // Clear the existing list
+
+                        let i = 1;
+                        orders.forEach((order) => {
+
+                            $('#all-orders-history').append('<h4>Order: ' + i + ' ' + 'Username: ' + order.username + '</h4>');
+
+                            order.products.forEach((product) => {
+
+                                const listItem = $('<li>' + product.productId.company + ', ' + product.productId.model +
+                                    ', ' + product.productId.price + '$, amount:' + product.quantity + '</li>');
+                                $('#all-orders-history').append(listItem);
+                            });
+                            i++;
+                        });
+                    },
+                    error: (error) => {
+                        console.log('Error:', error);
+                    }
+                });
             });
 
     });

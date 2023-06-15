@@ -1,5 +1,4 @@
 const Cart = require('../models/CartModel');
-const Surfboard = require('../models/SurfboardModel');
 
 
 const addToCart = async (req, res) => {
@@ -10,7 +9,6 @@ const addToCart = async (req, res) => {
     try {
 
         const cart = await Cart.findOne({ username: username });
-        // console.log(cart)
 
         if (!cart) {
 
@@ -19,7 +17,6 @@ const addToCart = async (req, res) => {
                 username: username,
                 products: [{
                     productId: surfboardId,
-                    price: surfboardPrice
                 }],
                 totalPrice: surfboardPrice
             });
@@ -44,7 +41,7 @@ const addToCart = async (req, res) => {
                 // If the product doesn't exist, add it to the cart
                 cart.products.push({
                     productId: surfboardId,
-                    price: Number(surfboardPrice)
+                    // price: Number(surfboardPrice)
                 });
                 await cart.save();
             }
@@ -67,13 +64,19 @@ const getCartItems = async (req, res) => {
     try {
         const cart = await Cart.findOne({ username: username }).populate('products.productId').lean();
         if (!cart)
-            return res.json({ products: [] });
+            return res.json({ products: [], totalPrice: 0 });
 
         return res.json({ products: cart.products, totalPrice: cart.totalPrice });
+        // return res.json({ cart: cart });
+        //
+        //
+        // need to change
+        //
+        //
     }
     catch (error) {
         console.error('Failed to find items:', error);
-        return res.send('Internal Server Error');
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 }
 
@@ -98,14 +101,14 @@ const removeCartItem = async (req, res) => {
     }
     catch (error) {
         console.error('Failed to find items:', error);
-        return res.send('Internal Server Error');
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 }
 
 const updateCartItem = async (req, res) => {
 
     const username = req.session.username;
-    const { productId, quantity, surfboardPrice } = req.body;
+    const { productId, quantity } = req.body;
 
     // delete if quantity is 0
     if (Number(quantity) === 0) {
@@ -120,7 +123,7 @@ const updateCartItem = async (req, res) => {
                 { username: username, 'products.productId': productId },
                 { $set: {
                             'products.$.quantity': Number(quantity),
-                            'products.$.price': Number(surfboardPrice),
+                            // 'products.$.price': Number(surfboardPrice),
                         }},
                 { new: true }
             );
@@ -133,17 +136,17 @@ const updateCartItem = async (req, res) => {
         }
         catch (error) {
             console.error('Failed to find item', error);
-            return res.send('Internal Server Error');
+            return res.status(500).json({ message: 'Internal Server Error' });
         }
     }
 }
 
 async function updatePrice(username) {
 
-    const cart = await Cart.findOne({username: username});
+    const cart = await Cart.findOne({username: username}).populate('products.productId');
     cart.totalPrice = 0;
     if (cart.products.length !== 0)
-        cart.products.forEach(product => cart.totalPrice += (Number(product.price) * Number(product.quantity)));
+        cart.products.forEach(product => cart.totalPrice += (product.productId.price * product.quantity));
 
     await cart.save();
 }

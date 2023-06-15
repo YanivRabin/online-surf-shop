@@ -3,12 +3,13 @@ const bodyParser     = require('body-parser');
 const { mongoose }   = require('mongoose');
 const path           = require("path");
 const session        = require("express-session");
-const socketIO       = require('socket.io')
-const http           = require('http')
+const socketIO       = require('socket.io');
+const http           = require('http');
 const homeRouter     = require('./routes/HomeRouter');
-const productsRouter = require('./routes/ProductsRouter');
-const authRouter     = require('./routes/AuthRouter')
+const storeRouter    = require('./routes/StoreRouter');
+const authRouter     = require('./routes/AuthRouter');
 const cartRouter     = require('./routes/CartRouter');
+const orderRouter    = require('./routes/OrderRoter');
 
 const app = express();
 const server = http.createServer(app);
@@ -31,8 +32,9 @@ app.use(session({
 // Routes
 app.use('/', homeRouter);
 app.use('/auth', authRouter); // for login and register
-app.use('/store', productsRouter); // for surfboards and other products
+app.use('/store', storeRouter); // for surfboards and other products
 app.use('/cart', cartRouter);
+app.use('/order', orderRouter);
 
 
 io.on('connection', (socket) => {

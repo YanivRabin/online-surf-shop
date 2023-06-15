@@ -14,7 +14,7 @@ const getAllSurfboards = async (req, res) => {
     }
     catch (error) {
         console.error('Failed to find surfboards:', error);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 };
 
@@ -99,7 +99,6 @@ const getSurfboardById = async (req, res) => {
 
         const surfboard = await Surfboard.findById(surfboardId);
         return res.json({ surfboard: surfboard });
-
     }
     catch (error) {
         console.error(error);
@@ -108,6 +107,36 @@ const getSurfboardById = async (req, res) => {
 
 };
 
+const getSurfboardsByFilter = async (req, res) => {
+
+    const { type, color } = req.query;
+    console.log(type, color)
+
+    // if there were filters and then unchecked all of them
+    if (typeof type === 'undefined' && typeof color === 'undefined')
+        return getAllSurfboards(req, res);
+
+    try {
+
+        let query = {};
+
+        // Build the query based on the available filters
+        if (typeof type !== 'undefined') {
+            query.type = { $in: type };
+        }
+        if (typeof color !== 'undefined') {
+            query.color = { $in: color };
+        }
+
+        const surfboards = await Surfboard.find(query);
+        return res.json({ surfboards: surfboards });
+    }
+    catch (error) {
+        console.error('Failed to find surfboards:', error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
 module.exports = {
 
     getSurfboardsPage,
@@ -115,5 +144,6 @@ module.exports = {
     createSurfboard,
     updateSurfboard,
     deleteSurfboard,
-    getSurfboardById
+    getSurfboardById,
+    getSurfboardsByFilter
 };

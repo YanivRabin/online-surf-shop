@@ -6,7 +6,6 @@ const cartSchema = new mongoose.Schema({
     products: [{
         productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Surfboard', required: true },
         quantity: { type: Number, default: 1 },
-        price: { type: Number, required: true }
     }],
     totalPrice: { type: Number, default: 0 }
 });
