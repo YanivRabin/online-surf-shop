@@ -12,4 +12,10 @@ router.post('/allHistory', isLoggedIn, isAdmin, orderController.getAllOrders);
 // complete an order
 router.post('/completeOrder', isLoggedIn, orderController.completeOrder);
 
+// get daily income for d3.js, only for admin
+router.get('/dailyIncome', isLoggedIn, isAdmin, orderController.getDailyIncome);
+
+// get daily surfboards sales for d3.js, only for admin
+router.get('/dailySurfboardsSales', isLoggedIn, isAdmin, orderController.getDailySurfboardsSales);
+
 module.exports = router;
