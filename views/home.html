@@ -5,105 +5,117 @@
     <title>Login and Registration Forms</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <form id="login">
-        <label for="login-username">Username:</label>
-        <input type="text" id="login-username" name="username" required><br>
+<h1>Login</h1>
+<form id="login">
+    <label for="login-username">Username:</label>
+    <input type="text" id="login-username" name="username" required><br>
 
-        <label for="login-password">Password:</label>
-        <input type="password" id="login-password" name="password" required><br>
+    <label for="login-password">Password:</label>
+    <input type="password" id="login-password" name="password" required><br>
 
-        <button type="submit">Login</button>
+    <button type="submit">Login</button>
+</form>
+<br>
+<h1>Registration</h1>
+<form id="register">
+    <label for="register-username">Username:</label>
+    <input type="text" id="register-username" name="username" required><br>
+
+    <label for="register-password">Password:</label>
+    <input type="password" id="register-password" name="password" required><br>
+
+    <button type="submit">Register</button>
+</form>
+<br>
+<div>
+    <h1>Logout</h1>
+    <form id="logout">
+        <button type="submit">Logout</button>
     </form>
-    <br>
-    <h1>Registration</h1>
-    <form id="register">
-        <label for="register-username">Username:</label>
-        <input type="text" id="register-username" name="username" required><br>
-
-        <label for="register-password">Password:</label>
-        <input type="password" id="register-password" name="password" required><br>
-
-        <button type="submit">Register</button>
-    </form>
-    <br>
-    <div>
-        <h1>Logout</h1>
-        <form id="logout">
-            <button type="submit">Logout</button>
-        </form>
-    </div>
-    <br>
-    <h1>Surfboards</h1>
-    <a href="/store/surfboards" class="button">Show Surfboards</a>
-
-<!--    <form id="fetchDataForm">-->
-<!--        <button type="submit">show surfboards</button>-->
-<!--    </form>-->
-<!--    <div id="dataContainer"></div>-->
-    <br>
-    <a href="/chat">Chat</a>
-    <br>
-    <a href="/Branches">Stores Map</a>
-    <br>
+</div>
+<br>
+<h1>Surfboards</h1>
+<a href="/store/surfboards" class="button">Show Surfboards</a>
+<br>
+<a href="/chat">Chat</a>
+<br>
+<a href="/branches">Stores Map</a>
+<br>
+<div id="weather">
+    <h2>Weather</h2>
+    <p id="weatherData"></p>
+</div>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
+<!--<script src="../views/weather.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
 
-        $(document).ready(() => {
-            $('#login').submit((event) => {
-                event.preventDefault(); // Prevent form submission
-                $.ajax({
-                    url: '/auth/login',
-                    method: 'POST',
-                    data: $('#login').serialize(),
-                    success: (response) => {
-                        const { redirectUrl } = response;
-                        sessionStorage.setItem('username', $('#login-username').val());
-                        window.location.href = redirectUrl;
-                    },
-                    error: (error) => {
-                        console.log('Error:', error);
-                    }
-                });
-            });
-
-            $('#register').submit((event) => {
-                event.preventDefault(); // Prevent form submission
-                $.ajax({
-                    url: '/auth/register',
-                    method: 'POST',
-                    data: $('#register').serialize(),
-                    success: (response) => {
-                        const { redirectUrl } = response;
-                        sessionStorage.setItem('username', $('#register-username').val());
-                        window.location.href = redirectUrl;
-                    },
-                    error: (error) => {
-                        console.log('Error:', error.message);
-                    }
-                });
-            });
-            $('#logout').submit((event) => {
-                event.preventDefault(); // Prevent form submission
-                $.ajax({
-                    url: '/auth/logout',
-                    method: 'POST',
-                    success: (response) => {
-                        const { redirectUrl } = response;
-                        sessionStorage.removeItem('username');
-                        window.location.href = redirectUrl;
-                    },
-                    error: (error) => {
-                        console.log('Error:', error);
-                    }
-                });
-            });
-
-
+    $(document).ready(() => {
+        $.ajax({
+            url: '/weather',
+            method: 'get',
+            success: (response) => {
+                const {temp, description} = response;
+                document.getElementById('weatherData').textContent = 'Temperature: ' + temp + ', Description: ' + description;
+            },
+            error: (error) => {
+                console.log('Error:', error);
+            }
         });
-    </script>
+
+        $('#login').submit((event) => {
+            event.preventDefault(); // Prevent form submission
+            $.ajax({
+                url: '/auth/login',
+                method: 'POST',
+                data: $('#login').serialize(),
+                success: (response) => {
+                    const { redirectUrl } = response;
+                    sessionStorage.setItem('username', $('#login-username').val());
+                    window.location.href = redirectUrl;
+                },
+                error: (error) => {
+                    console.log('Error:', error);
+                }
+            });
+        });
+
+        $('#register').submit((event) => {
+            event.preventDefault(); // Prevent form submission
+            $.ajax({
+                url: '/auth/register',
+                method: 'POST',
+                data: $('#register').serialize(),
+                success: (response) => {
+                    const { redirectUrl } = response;
+                    sessionStorage.setItem('username', $('#register-username').val());
+                    window.location.href = redirectUrl;
+                },
+                error: (error) => {
+                    console.log('Error:', error.message);
+                }
+            });
+        });
+        $('#logout').submit((event) => {
+            event.preventDefault(); // Prevent form submission
+            $.ajax({
+                url: '/auth/logout',
+                method: 'POST',
+                success: (response) => {
+                    const { redirectUrl } = response;
+                    sessionStorage.removeItem('username');
+                    window.location.href = redirectUrl;
+                },
+                error: (error) => {
+                    console.log('Error:', error);
+                }
+            });
+        });
+
+
+    });
+</script>
 
 </body>
 </html>
