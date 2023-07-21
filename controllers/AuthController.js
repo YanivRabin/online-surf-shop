@@ -63,8 +63,7 @@ const registerUser = async (req, res) => {
     catch (error) {
 
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
-    }
+        return res.status(500).json({ message: 'Internal server error', username: username })    }
 };
 
 const loginUser = async (req, res) => {
@@ -85,8 +84,7 @@ const loginUser = async (req, res) => {
 
         req.session.username = username;
         req.session.isAdmin = user.isAdmin;
-        return res.status(200).json({ message: 'User login successfully'});
-    }
+        return res.status(200).json({ message: 'User login successfully', username:username})    }
     catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
