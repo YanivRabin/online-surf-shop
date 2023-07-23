@@ -67,8 +67,9 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-
+    console.log('log');
     let { username, password } = req.body;
+    console.log({username});
     username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
 
     try {

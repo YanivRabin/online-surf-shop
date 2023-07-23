@@ -1,13 +1,31 @@
 $(document).ready(() => {
+    function updateLoginIcon(username) {
+        if (username) {
+            // If a username is provided, show the logged-in username and hide the login icon
+            $('#loggedInUsername').text(' ' + username);
+            $('#loginIcon').hide();
+            $('#loggedInUsername').show();
+        } else {
+            // If no username is provided, hide the logged-in username and show the login icon
+            $('#loggedInUsername').hide();
+            $('#loginIcon').show();
+        }
+    }
+
+
+    const storedUsername = sessionStorage.getItem('username');
+    if (storedUsername) {
+        updateLoginIcon(storedUsername); // Call the function to update the UI with the stored username
+    }
+
 
     $('#signUp').click((event) => {
         event.preventDefault();
         $.ajax({
-            url: '/auth/register',
+            url: '/auth/register', // Replace with your server-side register URL
             method: 'POST',
             data: $('#login').serialize(),
             success: (response) => {
-
                 // Registration successful
                 alert('Registration successful! Welcome ');
                 window.location.href = '/';
@@ -19,16 +37,12 @@ $(document).ready(() => {
         });
     });
 
-    $('#loginIcon').click((event) => {
-        event.preventDefault();
-        // Redirect the user to the login page
-        window.location.href = 'login.html';
-    });
+
 
     $('#login').submit((event) => {
         event.preventDefault();
         const username = $('#username').val();
-
+        console.log("user");
         $.ajax({
             url: '/auth/login',
             method: 'POST',
@@ -76,4 +90,34 @@ $(document).ready(() => {
     });
 
 
+    // Handle logout when the logout link is clicked
+    $('#logoutLink').click((event) => {
+        event.preventDefault();
+        logout();
+    });
+
+
+    function logout() {
+        $.ajax({
+            url: '/auth/logout', // Replace with your server-side logout URL
+            method: 'POST',
+            success: () => {
+                sessionStorage.removeItem('username'); // Clear the username from session storage
+                $('#loggedInUsername').hide(); // Hide the username
+                $('#loginIcon i').show(); // Show the login icon
+            },
+            error: (xhr) => {
+                const { message } = xhr.responseJSON;
+                alert('Status: ' + xhr.status + '\nMessage: ' + message);
+            }
+        });
+    }
+
 });
+
+function openForm() {
+    document.getElementById("myForm").style.display = "block";
+}
+function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+}
