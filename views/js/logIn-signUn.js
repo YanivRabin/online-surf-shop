@@ -2,6 +2,7 @@
 const usernameRegex = /^[a-zA-Z0-9_]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W\S]{8,}$/;
 
+
 $(document).ready(() => {
 
 
@@ -29,7 +30,6 @@ $(document).ready(() => {
     $('#signUp').click((event) => {
         event.preventDefault();
         const username = $('#login-username').val();
-        const password = $('#login-password').val();
 
         // If the input is valid, make an AJAX request to register the user
         $.ajax({
@@ -39,6 +39,7 @@ $(document).ready(() => {
             success: (response) => {
                 // Registration successful
                 sessionStorage.setItem('username', username);
+                closeForm();
                 updateLoginIcon(username);
             },
             error: (xhr) => {
@@ -52,8 +53,6 @@ $(document).ready(() => {
     // Handle Login form submission
     $('#login').submit((event) => {
         event.preventDefault();
-        const username = $('#login-username').val();
-        const password = $('#login-password').val();
 
 
         // If the input is valid, make an AJAX request to log in the user
@@ -71,23 +70,6 @@ $(document).ready(() => {
                 // Hide the login form (assuming it has an ID "loginForm")
                 $('#loginForm').hide();
 
-                // Add the logout click event handler
-                $('#loginStatus').click((event) => {
-                    event.preventDefault();
-                    $.ajax({
-                        url: '/auth/logout',
-                        method: 'POST',
-                        success: () => {
-                            sessionStorage.removeItem('username'); // Clear the username from session storage
-                            updateLoginIcon(null); // Update the UI to show the login icon
-                            window.location.href = '/';
-                        },
-                        error: (xhr) => {
-                            const { message } = xhr.responseJSON;
-                            alert('Status: ' + xhr.status + '\nMessage: ' + message);
-                        }
-                    });
-                });
 
                 // Redirect the user to the home page after successful login
                 window.location.href = '/';
@@ -100,34 +82,46 @@ $(document).ready(() => {
         });
     });
 
-    // Handle logout when the logout link is clicked
-    $('#logoutLink').click((event) => {
-        event.preventDefault();
-        logout();
-    });
 
-    function logout() {
+        $('#logout').click((event) => {
+            event.preventDefault();
         // Make an AJAX request to log out the user
         $.ajax({
             url: '/auth/logout', // Replace with your server-side logout URL
             method: 'POST',
             success: () => {
+                alert('You have successfully logged out!');
                 sessionStorage.removeItem('username'); // Clear the username from session storage
                 updateLoginIcon(null); // Update the UI to show the login icon
+                close_Logout_Form();
             },
             error: (xhr) => {
                 const { message } = xhr.responseJSON;
                 alert('Status: ' + xhr.status + '\nMessage: ' + message);
             }
+    });
         });
-    }
+
+
+
 });
 
 // Functions to show and hide the login form
 function openForm() {
+
     document.getElementById("myForm").style.display = "block";
 }
 
 function closeForm() {
     document.getElementById("myForm").style.display = "none";
+}
+
+function open_Logout_Form()
+{
+    document.getElementById("LogOutForm").style.display = "block";
+
+}
+
+function close_Logout_Form() {
+    document.getElementById("LogOutForm").style.display = "none";
 }

@@ -28,7 +28,9 @@ const isAdmin = async (req, res, next) => {
 
 const logoutUser = async (req, res) => {
 
+    let { username, password } = req.body;
     req.session.destroy(() => {
+        console.log(username+" logout successfully");
         return res.status(200).json({ message: 'User logout successfully' });
     });
 }
@@ -69,7 +71,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     // console.log('log');
     let { username, password } = req.body;
-    console.log({username});
+    console.log(username+" is online");
     username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
 
     try {
