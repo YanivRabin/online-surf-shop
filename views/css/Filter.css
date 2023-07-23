@@ -1,3 +1,4 @@
+/* CSS for Filter Dropdowns */
 .filter select {
   width: 170px;
   padding: 5px;
@@ -25,3 +26,42 @@
   outline: none;
 }
 
+.dropdown {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.dropdown-menu li {
+  padding: 5px;
+}
+
+.dropdown-menu label {
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-menu label input {
+  margin-right: 5px;
+}
+
+/* Additional Styling for Filters Container */
+.filters-container {
+  background-color: #f7f7f7;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.filters-container p {
+  margin-bottom: 5px;
+}
+
+/* Add some spacing between the filter checkboxes */
+.filters-container input[type="checkbox"] {
+  margin-right: 10px;
+}

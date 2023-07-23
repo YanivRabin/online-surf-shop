@@ -1,27 +1,24 @@
 $(document).ready(function() {
-
-    // daily income chart
+    // Daily income chart
     $.ajax({
         url: '/order/dailyIncome',
         method: 'get',
         success: (response) => {
-
-            // Receive the data from the server
             const { dailyIncome } = response;
 
-            // Set up the dimensions and margins of the chart
+            // Chart dimensions and margins
             const margin = { top: 20, right: 20, bottom: 30, left: 40 };
             const width = 100;
             const height = 500;
 
-            // Create an SVG element with the specified width and height
+            // Create an SVG element for the chart
             const svg = d3.select("#chart")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            // Define the x and y scales
+            // Define x and y scales
             const xScale = d3.scaleBand()
                 .range([0, width])
                 .padding(0.1)
@@ -35,7 +32,7 @@ $(document).ready(function() {
             const line = d3.line()
                 .x(d => xScale(d._id.day) + xScale.bandwidth() / 2)
                 .y(d => yScale(d.totalIncome))
-                .curve(d3.curveMonotoneX); // Add a curve to smooth the line
+                .curve(d3.curveMonotoneX);
 
             // Create the line path
             svg.append("path")
@@ -59,20 +56,19 @@ $(document).ready(function() {
         }
     });
 
-
-    // surfboards sales
+    // Surfboards sales
     $.ajax({
         url: '/order/dailySurfboardsSales',
         method: 'get',
         success: (response) => {
             const { dailySurfboardsSales } = response;
 
-            // Set up the dimensions and margins of the chart
+            // Chart dimensions and margins
             const margin = { top: 20, right: 20, bottom: 30, left: 40 };
             const width = 500; // Adjust the width to accommodate three bars per day
             const height = 500;
 
-            // Create an SVG element with the specified width and height
+            // Create an SVG element for the chart
             const svg = d3.select("#surfboards-chart")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -82,7 +78,7 @@ $(document).ready(function() {
             // Extract unique surfboard names
             const surfboards = Array.from(new Set(dailySurfboardsSales.map(d => d.surfboard)));
 
-            // Define the x and y scales
+            // Define x and y scales
             const xScale = d3.scaleBand()
                 .range([0, width])
                 .padding(0.1)
@@ -92,6 +88,7 @@ $(document).ready(function() {
                 .range([height, 0])
                 .domain([0, d3.max(dailySurfboardsSales, d => d.totalQuantity)]);
 
+            // Create bars for each surfboard sales
             svg.selectAll(".bar")
                 .data(dailySurfboardsSales)
                 .enter()
@@ -114,7 +111,6 @@ $(document).ready(function() {
                 .attr("width", xScale.bandwidth() / surfboards.length)
                 .attr("height", d => height - yScale(d.quantity))
                 .attr("fill", (d, i) => d3.schemeCategory10[i]);
-
 
             // Add the year and month on top of the graph
             svg.append("text")
@@ -151,7 +147,7 @@ $(document).ready(function() {
         let type = [];
         let color = [];
 
-        checkedCheckboxes.each(function() {
+        checkedCheckboxes.each(function () {
             if ($(this).attr('value') === 'type')
                 type.push($(this).attr('id'));
 
@@ -160,31 +156,62 @@ $(document).ready(function() {
         });
 
         $.ajax({
-
             url: "/store/filterSurfboards",
             method: "get",
             data: { type, color },
             success: (response) => {
-
                 const { surfboards } = response;
 
-                $('#surfboards-list').empty();  // Clear the existing list
-                surfboards.forEach((surfboard) => {
+                // Clear the existing list
+                $('#surfboards-list').empty();
 
-                    const listItem = $('<li>' + surfboard.company + ', ' + surfboard.model + ', ' + surfboard.price + '$, ' + surfboard._id + '</li>');
-                    const addButton = $('<button type="button">Add to Cart</button>');
-                    addButton.click(function() {
-                        addToCart(surfboard._id, surfboard.price);  // Call the addToCart function with the surfboard ID
+                // Function to create and append surfboard list items to the surfboards list
+                const createSurfboardListItem = (surfboard) => {
+                    const listItem = $('<div style="text-align: center; font-family: Montserrat, sans-serif;">' +
+                        '<h1 style="font-size: 15px; margin-top: 10px;">' + surfboard.company + " / " +surfboard.model + '</h1>' +
+                        '<button class="btn btn-primary" type="button" style="background: url(../img/Modern2.5/sharpeyesurfboards_us_2019_modern2-5.png) center / cover no-repeat; height: 200px; width: 150px; border-color: rgba(0, 0, 0, 0);"></button>' +
+                        '<p style="font-size: 15px; font-family: Montserrat, sans-serif; margin-top: 10px;">Price : <i class="fa fa-dollar"></i>&nbsp;' + surfboard.price + '&nbsp;</p>' +
+                        '<p style="font-size: 15px; font-family: Montserrat, sans-serif; margin-top: 10px;">Color : ' + surfboard.color + '</p>' +
+                        '<p style="font-size: 15px; font-family: Montserrat, sans-serif; margin-top: 10px;">Type : ' + surfboard.color + '</p>' +
+
+                        '<div class="row" id="add-cart">' +
+                        '<div class="col">' +
+                        '<button class="btn btn-primary" type="button" style="background: rgba(155, 158, 163, 0); color: rgb(0, 0, 0); transform: perspective(0px) skew(0deg); border-color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center; border-radius: 8px; box-shadow: 0px 0px 20px 1px;">Add to Cart</button>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
+
+                    // Add click event to the "Add to Cart" button
+                    listItem.find('button').click(() => {
+                        addToCart(surfboard._id, surfboard.price); // Call the addToCart function with the surfboard ID
                     });
-                    listItem.append(addButton);
-                    $('#surfboards-list').append(listItem);
-                });
+
+                    return listItem;
+                };
+
+                // Calculate the number of rows needed
+                const numRows = Math.ceil(surfboards.length / 4);
+
+                for (let row = 0; row < numRows; row++) {
+                    const rowContainer = $('<div class="row"></div>');
+
+                    for (let i = row * 4; i < Math.min((row + 1) * 4, surfboards.length); i++) {
+                        const surfboard = surfboards[i];
+                        const col = $('<div class="col-md-3"></div>');
+                        col.append(createSurfboardListItem(surfboard));
+                        rowContainer.append(col);
+                    }
+
+                    $('#surfboards-list').append(rowContainer);
+                }
             },
             error: (error) => {
                 console.log('Error:', error);
             }
         });
     }
+
+
 
 
     // get cart items
