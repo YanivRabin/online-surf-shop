@@ -3,7 +3,7 @@ const path = require("path");
 
 
 const getSurfboardsPage = (req, res) => {
-    return res.sendFile(path.join(__dirname, '../views/surfboards.html'))
+    return res.sendFile(path.join(__dirname, '../views/surfboards(yaniv).html'))
 };
 
 const getAllSurfboards = async (req, res) => {
