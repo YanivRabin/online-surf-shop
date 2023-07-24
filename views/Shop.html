@@ -23,31 +23,36 @@
         <div id="navbar-container"></div>
 
 
-            <div class="col" data-aos="fade-up" data-aos-delay="500">
-                <h1 style="font-family: Montserrat, sans-serif;text-align: center;color: rgb(78,78,78);font-size: 20px;margin-top: 50px;"><span style="color: rgb(0, 0, 0);">OUR MODELS</span></h1>
+        <div class="row" data-aos="fade-up" data-aos-delay="500">
+            <h1 style="font-family: Montserrat, sans-serif;text-align: center;color: rgb(78,78,78);font-size: 20px;margin-top: 50px;"><span style="color: rgb(0, 0, 0);">OUR MODELS</span></h1>
 
-                <form id="surfboards">
-
+            <form id="surfboards">
                 <div class="filters-container">
                     <!--filter-->
+                    <div class="row" data-aos="fade-up" data-aos-delay="500">
+                        <div class="col">
+                            <p>
+                                Type:
+                                <label><input type="checkbox" id="Fish" value="type"> Fish</label>
+                                <label><input type="checkbox" id="Short" value="type"> Short</label>
+                                <label><input type="checkbox" id="Hybrid" value="type"> Hybrid</label>
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p>
+                                Color:
+                                <label><input type="checkbox" id="White" value="color"> White</label>
+                                <label><input type="checkbox" id="Black" value="color"> Black</label>
+                                <label><input type="checkbox" id="Blue" value="color"> Blue</label>
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-                    <p>Type:
-                        <label> <input type="checkbox" id="Fish" value="type"> Fish </label>
-                        <label> <input type="checkbox" id="Short" value="type"> Short </label>
-                        <label> <input type="checkbox" id="Hybrid" value="type"> Hybrid </label>
-                    </p>
-
-                    <p>Color:
-                        <label><input type="checkbox" id="White" value="color"> White </label>
-                        <label> <input type="checkbox" id="Black" value="color">Black </label>
-                        <label><input type="checkbox" id="Blue" value="color">Blue</label>
-                    </p>
-
-                    <ul id="surfboards-list"> </ul>
-            </div>
-                </form>
-
+                <ul id="surfboards-list"> </ul>
+            </form>
         </div>
+
         <div id="hero-buttom" >
 
             <div class="row" style="margin-top: 90px" >
