@@ -83,8 +83,9 @@ $(document).ready(() => {
     });
 
 
-        $('#logout').click((event) => {
+        $('#logout').submit((event) => {
             event.preventDefault();
+
         // Make an AJAX request to log out the user
         $.ajax({
             url: '/auth/logout', // Replace with your server-side logout URL
