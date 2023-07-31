@@ -12,8 +12,6 @@ const cartRouter = require('./routes/CartRouter');
 const orderRouter = require('./routes/OrderRoter');
 
 
-
-
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
@@ -22,7 +20,6 @@ mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -34,9 +31,6 @@ app.use(
         cookie: { maxAge: 24 * 60 * 60 * 1000 } // Set session expiration to 1 day (24 hours * 60 minutes * 60 seconds * 1000 milliseconds)
     })
 );
-
-
-// Routes
 app.use(express.static(path.join(__dirname, 'views')));
 app.use('/', homeRouter);
 app.use('/auth', authRouter); // for login and register
@@ -59,9 +53,3 @@ io.on('connection', (socket) => {
 server.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
-
-// npm run app
-// for test: npm run test
-
-
-

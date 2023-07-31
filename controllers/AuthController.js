@@ -2,16 +2,7 @@ const User = require("../models/UserModel");
 const bcrypt = require('bcrypt');
 
 
-// const registerForm = async (req, res) => {
-//     // redirect to register html
-// }
-
-// const loginForm = async (req, res) => {
-//     // redirect to log in html
-// }
-
 const isLoggedIn = async (req, res, next) => {
-
     if (!req.session.username)
         return res.status(401).json({ message: 'User is not connected' });
 
@@ -19,7 +10,6 @@ const isLoggedIn = async (req, res, next) => {
 }
 
 const isAdmin = async (req, res, next) => {
-
     if (!req.session.isAdmin)
         return res.status(403).json({ message: 'Unauthorized' });
 
@@ -27,16 +17,14 @@ const isAdmin = async (req, res, next) => {
 }
 
 const logoutUser = async (req, res) => {
-
     let { username } = req.body;
     req.session.destroy(() => {
-        console.log(username+" logout successfully");
+        console.log(username + " logout successfully");
         return res.status(200).json({ message: 'User logout successfully' });
     });
 }
 
 const registerUser = async (req, res) => {
-
     let { username, password } = req.body;
     username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
     try {
@@ -63,9 +51,7 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-    // console.log('log');
     let { username, password } = req.body;
-    console.log(username+" is online");
     username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
     try {
         const user = await User.findOne({ username: username });
@@ -77,6 +63,7 @@ const loginUser = async (req, res) => {
         if (!passwordMatch)
             return res.status(400).json({ message: 'Invalid password' });
 
+        console.log(username + " is online");
         req.session.username = username;
         req.session.isAdmin = user.isAdmin;
         return res.status(200).json({ message: 'User login successfully', username:username})    }
@@ -87,7 +74,6 @@ const loginUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-
     try {
         const users = await User.find({});
         return res.status(200).json({ users: users });
@@ -101,8 +87,6 @@ const getAllUsers = async (req, res) => {
 module.exports = {
     loginUser,
     registerUser,
-    // loginForm,
-    // registerForm,
     isLoggedIn,
     logoutUser,
     isAdmin,

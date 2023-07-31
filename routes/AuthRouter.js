@@ -7,8 +7,7 @@ const { isLoggedIn, isAdmin } = require("../controllers/AuthController");
 router.post("/register", loginController.registerUser);
 router.post("/login", loginController.loginUser);
 router.post('/logout', loginController.logoutUser);
-
-// receive all the users that register ( only for admin)
+// receive all the users that register ( only for admin )
 router.get('/allUsers',isLoggedIn, isAdmin, loginController.getAllUsers);
 
 module.exports = router;
