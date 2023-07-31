@@ -37,7 +37,14 @@ const createSurfboard = async (req, res) => {
             volume: Number(volume)
         });
 
-        // Save the surfboard to the database
+
+        //Post NewSurfBoard To the Facebook page
+        if (newSurfboard) {
+            const message = `Check out our new SurfBoard from: ${company}! Model: ${model}.`;
+            await postToFacebook(message);
+        }
+
+    // Save the surfboard to the database
         await newSurfboard.save();
         return res.status(201).json({ newSurfboard: newSurfboard });
     } catch (error) {
@@ -45,6 +52,48 @@ const createSurfboard = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+const postToFacebook=async(postMessage)=> {
+    const API_BASE = 'https://graph.facebook.com/v15.0';
+    const userToken = 'EAASo4qcZA9GwBO72dQfyDQdsgHoBQK1zweEDxxiSJ7GajJv562KLOiSPuUBiEear0esZAzoqxEtZCdoJR0hUKpNFDGgtnxPTy1KCZC4JJ6ZCEntVqLZBJDb9jN7HAyApYPAArcZCsj9DtbRaemrtuZAon3s1bRGYGlKxHSyUqZCUsPIHgDrO6ZCsoeIAZDZD';
+
+    try {
+        const pageResp = await fetch(`${API_BASE}/me/accounts?access_token=${userToken}`);
+
+        if (!pageResp.ok) {
+            throw new Error(`Failed to get page access token: ${pageResp.statusText}`);
+        }
+
+        const pages = await pageResp.json();
+        const page = pages.data[0];
+        const pageToken = page.access_token;
+        const pageId = page.id;
+
+        const fbPostObj = {
+            message: postMessage,
+        };
+
+        const postResp = await fetch(`${API_BASE}/${pageId}/feed`, {
+            method: 'POST',
+            body: JSON.stringify(fbPostObj),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${pageToken}`,
+            },
+        });
+
+        if (!postResp.ok) {
+            const errorDetails = await postResp.json();
+            console.error('Error details:', errorDetails);
+            throw new Error(`Failed to post to Facebook: ${postResp.statusText}`);
+        }
+
+        console.log('Successfully posted to Facebook');
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 
 const updateSurfboard = async (req, res) => {
 
