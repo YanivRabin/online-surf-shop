@@ -20,35 +20,42 @@
 <body style="color: rgb(0,0,0);background: rgb(5,16,20);">
     <section class="d-flex flex-column justify-content-between" style="width: 100%;height: 100vh;background: url(img/yaniv.jpg) center / cover , #ffffff;transform: perspective(0px);">
 
+        <!-- nav bar -->
         <div id="navbar-container"></div>
 
-
+        <!-- filters and surfboards-->
         <div class="row" data-aos="fade-up" data-aos-delay="500">
             <h1 style="font-family: Montserrat, sans-serif;text-align: center;color: rgb(78,78,78);font-size: 20px;margin-top: 50px;"><span style="color: rgb(0, 0, 0);">OUR MODELS</span></h1>
-
             <form id="surfboards">
                 <div class="filters-container">
-                    <!--filter-->
                     <div class="row" data-aos="fade-up" data-aos-delay="500">
                         <div class="col">
                             <p>
-                                Type:
-                                <label><input type="checkbox" id="Fish" value="type"> Fish</label>
-                                <label><input type="checkbox" id="Short" value="type"> Short</label>
-                                <label><input type="checkbox" id="Hybrid" value="type"> Hybrid</label>
+                                Company:
+                                <label>Christenson <input type="checkbox" id="Christenson" value="company"></label>
+                                <label>Sharp Eye <input type="checkbox" id="Sharp-Eye" value="company"></label>
+                                <label>Al Merrick <input type="checkbox" id="Al-Merrick" value="company"></label>
                             </p>
                         </div>
                         <div class="col">
                             <p>
-                                Color:
-                                <label><input type="checkbox" id="White" value="color"> White</label>
-                                <label><input type="checkbox" id="Black" value="color"> Black</label>
-                                <label><input type="checkbox" id="Blue" value="color"> Blue</label>
+                                Type:
+                                <label>Fish <input type="checkbox" id="Fish" value="type"></label>
+                                <label>Short <input type="checkbox" id="Short" value="type"></label>
+                                <label>Hybrid <input type="checkbox" id="Hybrid" value="type"></label>
+                                <label>Step-Up <input type="checkbox" id="Step-Up" value="type"></label>
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p>
+                                Tail:
+                                <label>Squash <input type="checkbox" id="Squash" value="tail"></label>
+                                <label>Round <input type="checkbox" id="Round" value="tail"></label>
+                                <label>Swallow <input type="checkbox" id="Swallow" value="tail"></label>
                             </p>
                         </div>
                     </div>
                 </div>
-
                 <ul id="surfboards-list"> </ul>
             </form>
         </div>

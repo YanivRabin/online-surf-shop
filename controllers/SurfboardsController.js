@@ -131,9 +131,9 @@ const getSurfboardById = async (req, res) => {
 };
 
 const getSurfboardsByFilter = async (req, res) => {
-    const { type, color } = req.query;
+    const { type, company, tail } = req.query;
     // if there were filters and then unchecked all of them
-    if (typeof type === 'undefined' && typeof color === 'undefined') {
+    if (typeof type === 'undefined' && typeof company === 'undefined'&& typeof tail === 'undefined') {
         return getAllSurfboards(req, res);
     }
 
@@ -143,9 +143,13 @@ const getSurfboardsByFilter = async (req, res) => {
         if (typeof type !== 'undefined') {
             query.type = { $in: type };
         }
-        if (typeof color !== 'undefined') {
-            query.color = { $in: color };
+        if (typeof company !== 'undefined') {
+            query.company = { $in: company };
         }
+        if (typeof tail !== 'undefined') {
+            query.tail = { $in: tail };
+        }
+        console.log(query)
         const surfboards = await Surfboard.find(query);
         return res.json({ surfboards: surfboards });
     }
