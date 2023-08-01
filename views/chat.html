@@ -1,42 +1,55 @@
+<!DOCTYPE html>
 <html lang="eng">
 <body>
 
-    <form id="chat">
-    <label><input id="comment" autocomplete="off" placeholder="Enter text" /></label>
+<form id="chat">
+    <label><input id="comment" autoComplete="off" placeholder="Enter text"/></label>
     <button>Send</button>
-    </form>
+</form>
 
-    <div></div>
+<div id="messages"></div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-    <script>
-        $(function () {
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossOrigin="anonymous"></script>
+<script>
+    $(function () {
+        const socket = io();
 
-            const socket = io();
-            $('button').click(function () {
+        let username = getUsername();
+        socket.emit('joined', username);
 
-                socket.emit('new message', $('input').val());
-                $('input').val('');
-            });
-            socket.on('new message', function (msg) {
-
-                $('div').append(msg + '<br />');
-            });
-            socket.on('joined', function (msg) {
-
-                $('div').append('A new user joined<br />');
-            });
-            socket.on('disconnected', function (msg) {
-
-                $('div').append('A user disconnected<br />');
-            });
-
-            $('#chat').submit((event) => {
-
-                event.preventDefault();
-            });
+        $('button').click(function () {
+            const message = $('input').val();
+            socket.emit('new message', {username: getUsername(), message: message});
+            $('input').val('');
         });
-    </script>
+
+        socket.on('new message', function (data) {
+            $('#messages').append('<strong>' + data.username + '</strong>: ' + data.message + '<br />');
+        });
+
+        socket.on('joined', function (msg) {
+            $('#messages').append(msg + '<br />');
+        });
+
+        socket.on('disconnected', function (msg) {
+            $('#messages').append(msg + '<br />');
+        });
+
+        $('#chat').submit((event) => {
+            event.preventDefault();
+        });
+
+        function getUsername() {
+            return sessionStorage.getItem('username');
+        }
+
+        // Emit 'set username' event without data
+        socket.emit('set username');
+    });
+</script>
+
+
 </body>
 </html>

@@ -11,7 +11,6 @@ const authRouter = require('./routes/AuthRouter');
 const cartRouter = require('./routes/CartRouter');
 const orderRouter = require('./routes/OrderRoter');
 
-
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
@@ -37,19 +36,23 @@ app.use('/auth', authRouter); // for login and register
 app.use('/store', storeRouter); // for surfboards and other products
 app.use('/cart', cartRouter);
 app.use('/order', orderRouter);
+app.use('/chat', homeRouter);
 
 io.on('connection', (socket) => {
-    socket.broadcast.emit('joined', socket.username + ' Joined');
+
+    socket.on('joined', (username) => {
+        socket.username = username; // save username to socket object
+        socket.broadcast.emit('joined', socket.username + ' Joined');
+    });
 
     socket.on('disconnect', () => {
-        socket.broadcast.emit('disconnected', socket.username + ' Disconnected');
+        socket.broadcast.emit('disconnected', socket.username+' Disconnected');
     });
 
-    socket.on('new message', (msg) => {
-        io.emit('new message', socket.username + ': ' + msg);
+    socket.on('new message', (data) => {
+        io.emit('new message', data);
     });
+
 });
 
-server.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-});
+server.listen(3000, () => { console.log('Server is running on http://localhost:3000'); });
