@@ -136,7 +136,6 @@ const getSurfboardsByFilter = async (req, res) => {
     if (typeof type === 'undefined' && typeof company === 'undefined'&& typeof tail === 'undefined') {
         return getAllSurfboards(req, res);
     }
-
     try {
         let query = {};
         // Build the query based on the available filters
@@ -149,7 +148,6 @@ const getSurfboardsByFilter = async (req, res) => {
         if (typeof tail !== 'undefined') {
             query.tail = { $in: tail };
         }
-        console.log(query)
         const surfboards = await Surfboard.find(query);
         return res.json({ surfboards: surfboards });
     }

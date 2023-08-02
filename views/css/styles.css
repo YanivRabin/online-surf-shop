@@ -1,6 +1,5 @@
 {box-sizing: border-box;}
 
-
 .filter select {
   width: 170px;
   padding: 5px;
@@ -91,7 +90,6 @@
   background: url("../img/yaniv22.jpg") center/cover no-repeat
 }
 
-
 .myForm {
   display: none;
   position: fixed;
@@ -114,3 +112,25 @@
   max-width: 400px;
 }
 
+.filters-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.filters-container {
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.filter-space {
+  margin: 0;
+  padding: 5px;
+}
+
+.line-break {
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}

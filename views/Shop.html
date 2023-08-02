@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en" style="color: rgb(0, 0, 0);">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -16,66 +15,65 @@
     <link rel="stylesheet" href="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body style="color: rgb(0,0,0);background: rgb(5,16,20);">
-    <section class="d-flex flex-column justify-content-between" style="width: 100%;height: 100vh;background: url(img/yaniv.jpg) center / cover , #ffffff;transform: perspective(0px);">
 
+    <section class="d-flex flex-column justify-content-between" style="width: 100%;height: 100vh;background: url(img/yaniv.jpg) center / cover , #ffffff;transform: perspective(0px);">
         <!-- nav bar -->
         <div id="navbar-container"></div>
-
         <!-- filters and surfboards-->
-        <div class="row" data-aos="fade-up" data-aos-delay="500">
-            <h1 style="font-family: Montserrat, sans-serif;text-align: center;color: rgb(78,78,78);font-size: 20px;margin-top: 50px;"><span style="color: rgb(0, 0, 0);">OUR MODELS</span></h1>
-            <form id="surfboards">
-                <div class="filters-container">
-                    <div class="row" data-aos="fade-up" data-aos-delay="500">
-                        <div class="col">
-                            <p>
-                                Company:
-                                <label>Christenson <input type="checkbox" id="Christenson" value="company"></label>
-                                <label>Sharp Eye <input type="checkbox" id="Sharp-Eye" value="company"></label>
-                                <label>Al Merrick <input type="checkbox" id="Al-Merrick" value="company"></label>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p>
-                                Type:
-                                <label>Fish <input type="checkbox" id="Fish" value="type"></label>
-                                <label>Short <input type="checkbox" id="Short" value="type"></label>
-                                <label>Hybrid <input type="checkbox" id="Hybrid" value="type"></label>
-                                <label>Step-Up <input type="checkbox" id="Step-Up" value="type"></label>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p>
-                                Tail:
-                                <label>Squash <input type="checkbox" id="Squash" value="tail"></label>
-                                <label>Round <input type="checkbox" id="Round" value="tail"></label>
-                                <label>Swallow <input type="checkbox" id="Swallow" value="tail"></label>
-                            </p>
+        <div id="main" class="container mt-4">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="filters-container">
+                        <div class="row" data-aos="fade-up" data-aos-delay="500">
+                            <ul class="list-unstyled">
+                                <li class="line-break">
+                                    <h5 class="filter-space">Company</h5>
+                                    <ul class="list-unstyled filter-space">
+                                        <li><label><input type="checkbox" id="Christenson" value="company">Christenson</label></li>
+                                        <li><label><input type="checkbox" id="Sharp-Eye" value="company">Sharp Eye</label></li>
+                                        <li><label><input type="checkbox" id="Al-Merrick" value="company">Al Merrick</label></li>
+                                    </ul>
+                                </li>
+                                <li class="line-break">
+                                    <h5 class="filter-space">Type</h5>
+                                    <ul class="list-unstyled filter-space">
+                                        <li><label><input type="checkbox" id="Fish" value="type">Fish</label></li>
+                                        <li><label><input type="checkbox" id="Short" value="type">Short</label></li>
+                                        <li><label><input type="checkbox" id="Hybrid" value="type">Hybrid</label></li>
+                                        <li><label><input type="checkbox" id="Step-Up" value="type">Step-Up</label></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h5 class="filter-space">Tail</h5>
+                                    <ul class="list-unstyled filter-space">
+                                        <li><label><input type="checkbox" id="Squash" value="tail">Squash</label></li>
+                                        <li><label><input type="checkbox" id="Round" value="tail">Round</label></li>
+                                        <li><label><input type="checkbox" id="Swallow" value="tail">Swallow</label></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <ul id="surfboards-list"> </ul>
-            </form>
+                <div class="col-md-10">
+                    <ul id="surfboards-list"></ul>
+                </div>
+            </div>
         </div>
-
+        <!-- footer policy -->
         <div id="hero-buttom" >
-
             <div class="row" style="margin-top: 90px" >
-
                 <div class="col" data-aos="fade-up" data-aos-delay="500" style="text-align: center;">
                     <h1 style="font-size: 20px;color: rgb(255,255,255);">Shipping</h1>
                     <h1 style="margin-bottom: 10px;"><i class="fas fa-shipping-fast" style="color: rgb(255,255,255);"></i></h1>
                 </div>
-
                 <div class="col" data-aos="fade-up" data-aos-delay="500" style="text-align: center;">
                     <h1 style="font-size: 20px;color: rgb(255,255,255);">Return Policy</h1>
                     <h1 style="margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-credit-card-2-back-fill" style="color: rgb(255,255,255);">
                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0V4zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-2zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1H0z"></path>
                         </svg></h1>
                 </div>
-
                 <div class="col" data-aos="fade-up" data-aos-delay="500" style="text-align: center;">
                     <h1 style="font-size: 20px;color: rgb(255,255,255);text-align: center;">Terms &amp; Conditions</h1>
                     <h1 style="margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-adjustments-horizontal" style="color: rgb(255,255,255);">
@@ -104,6 +102,8 @@
             </div>
         </div>
     </section>
+
+    <!-- scripts -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/aos.min.js"></script>
     <script src="js/bs-init.js"></script>
@@ -113,13 +113,10 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="js/filter_and_cart.js"></script>
-
     <script>
         $(function(){
             $("#navbar-container").load("navbar.html");
         });
     </script>
-
 </body>
-
 </html>
