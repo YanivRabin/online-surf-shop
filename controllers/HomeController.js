@@ -1,11 +1,11 @@
 const fetch  = require('node-fetch');
 const path = require('path');
 
-const getHomePage = (req, res) => {
+const getHomePage = async (req, res) => {
     return res.sendFile(path.join(__dirname, '../views/HomePage.html'));
 };
 
-const getChat = (req, res) => {
+const getChat = async (req, res) => {
     return res.sendFile(path.join(__dirname, '../views/chat.html'));
 };
 

@@ -28,7 +28,7 @@ const createSurfboard = async (req, res) => {
         //Post NewSurfBoard To the Facebook page
         if (newSurfboard) {
             const message = `Check out our new SurfBoard from: ${company}! Model: ${model}.`;
-            // await postToFacebook(message);
+            await postToFacebook(message);
         }
         // Save the surfboard to the database
         await newSurfboard.save();
@@ -82,12 +82,12 @@ const postToFacebook=async(postMessage)=> {
 };
 
 const updateSurfboard = async (req, res) => {
-    const { _id, company, model, price, image, color, type, tail, height, width, thick, volume } = req.body;
+    const { _id, company, model, price, image, type, tail } = req.body;
     try {
         // Find and update the surfboard
         const updatedSurfboard = await Surfboard.findByIdAndUpdate(
             _id,
-            { company, model, price, image, color, type, tail, height, width, thick, volume },
+            { company, model, price, image, type, tail },
             { new: true }
         );
         if (!updatedSurfboard)
@@ -100,7 +100,6 @@ const updateSurfboard = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
-
 
 const deleteSurfboard = async (req, res) => {
     const { surfboardId } = req.body;

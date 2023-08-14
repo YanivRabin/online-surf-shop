@@ -48,7 +48,7 @@ $(document).ready(function() {
                         '<br>' +
                         '<div style="text-align: center; font-family: Montserrat, sans-serif;">' +
                         '<h1 style="font-size: 15px; margin-top: 10px;">' + surfboard.company + " / " + surfboard.model + '</h1>' +
-                        `<button class="btn btn-primary" type="button" style="background:url('../img/surfboards/${surfboard.image}') center / cover no-repeat; height: 200px; width: 150px; border-color: rgba(0, 0, 0, 0);"></button>` +
+                        `<button class="btn btn-primary" type="button" disabled style="background:url('../img/surfboards/${surfboard.image}') center / cover no-repeat; height: 200px; width: 150px; border-color: rgba(0, 0, 0, 0);"></button>` +
                         '<p style="font-size: 15px; font-family: Montserrat, sans-serif; margin-top: 10px;">Price: <i class="fa fa-dollar"></i>&nbsp;' + surfboard.price + '&nbsp;</p>' +
                         '<p style="font-size: 15px; font-family: Montserrat, sans-serif; margin-top: 10px;">Type: ' + surfboard.type + '</p>' +
                         '<p style="font-size: 15px; font-family: Montserrat, sans-serif; margin-top: 10px;">Tail: ' + surfboard.tail + '</p>' +

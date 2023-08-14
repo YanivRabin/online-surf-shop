@@ -4,20 +4,20 @@ const { isLoggedIn, isAdmin } = require("../controllers/AuthController");
 const Store = require('../models/StoreModel');
 const path = require('path');
 const fs = require('fs');
-const {GOOGLE_API_KEY} = require("../config/config");
+const { GOOGLE_API_KEY } = require("../config/config");
 const apiKey = GOOGLE_API_KEY;
 
-// get the html and upload the data
-// router.get('/', surfboardsController.getSurfboardsPage);
+// get the store page
+router.get('/', async (req, res) => { res.sendFile(path.join(__dirname, '../views/Shop.html')); })
+// get all
 router.get('/surfboards', surfboardsController.getAllSurfboards);
-// receive surfboards by filter
+// get surfboards by filter
 router.get('/filterSurfboards', surfboardsController.getSurfboardsByFilter);
 // create new surfboard
 router.post('/createSurfboard', isLoggedIn, isAdmin, surfboardsController.createSurfboard);
-// get a single surfboard and update
-router.post('/getOneSurfboard', surfboardsController.getSurfboardById);
+// update surfboard
 router.put('/updateSurfboard', isLoggedIn, isAdmin, surfboardsController.updateSurfboard);
-// delete exist surfboard
+// delete surfboard
 router.delete('/deleteSurfboard', isLoggedIn, isAdmin, surfboardsController.deleteSurfboard);
 // get store branches ( google map )
 router.get('/branches', async (req, res) => {
