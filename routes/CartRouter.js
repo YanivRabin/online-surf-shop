@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const cartController = require('../controllers/cartController');
 const { isLoggedIn } = require("../controllers/AuthController");
+const path = require("path");
 
 
+router.get('/', async (req, res) => { res.sendFile(path.join(__dirname, '../views/cart.html')); })
 // get items from cart
 router.get('/getItems',isLoggedIn, cartController.getCartItems);
 // add item to the cart

@@ -103,6 +103,8 @@ $(document).ready(function() {
     }
 
 
+
+
     // // Daily income chart
     // $.ajax({
     //     url: '/order/dailyIncome',
@@ -241,47 +243,37 @@ $(document).ready(function() {
     //
     // // get cart items
     // function getItems() {
-    //
     //     $.ajax({
-    //
     //         url: "/cart/getItems",
     //         method: 'get',
     //         success: (response) => {
-    //
     //             const { cart } = response;
-    //
     //             $('#cart-list').empty();  // Clear the existing list
     //             cart.products.forEach((product) => {
-    //
     //                 const listItem = $('<li>company: ' + product.productId.company + ', model: ' + product.productId.model +
     //                     ', amount:' + product.quantity + ', price: ' +
     //                     Number(product.quantity) * Number(product.productId.price) + '$ </li>');
-    //
     //                 // add to cart
     //                 const addButton = $('<button type="button">Remove from cart</button>');
     //                 addButton.click(function() {
     //                     removeFromCart(product.productId);  // Call the addToCart function with the surfboard ID
     //                 });
     //                 listItem.append(addButton);
-    //
     //                 // plus 1 to item quantity
     //                 const plusButton = $('<button type="button">+</button>');
     //                 plusButton.click(function() {
     //                     updateItem(product.productId, product.quantity + 1, product.productId.price);
     //                 });
     //                 listItem.append(plusButton);
-    //
     //                 // minus 1 to item quantity
     //                 const minusButton = $('<button type="button">-</button>');
     //                 minusButton.click(function() {
     //                     updateItem(product.productId, product.quantity - 1, product.productId.price);
     //                 });
     //                 listItem.append(minusButton);
-    //
     //                 // append all the above
     //                 $('#cart-list').append(listItem);
     //             });
-    //
     //             $('#total-price').text("Total price: " + cart.totalPrice + "$");
     //         },
     //         error: (error) => {
@@ -289,7 +281,7 @@ $(document).ready(function() {
     //         }
     //     });
     // }
-    //
+
     // // create new surfboard
     // $('#create').submit(function(e){
     //
