@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body id="hero">
 <!-- nav bar -->
-<div id="navbar-container"></div>
+<div id="navbar-container" ></div>
 
 
     <!-- surfboards container -->
@@ -100,6 +100,8 @@
             </div>
         </div>
     </div>
+<!-- bottom & policy -->
+<div id="bottom-container"></div>
 
 
     <script src="js/bootstrap.min.js"></script>
@@ -115,6 +117,7 @@
     <script>
         $(function(){
             $("#navbar-container").load("navbar.html");
+            $("#bottom-container").load("bottom.html");
         });
     </script>
 </body>
