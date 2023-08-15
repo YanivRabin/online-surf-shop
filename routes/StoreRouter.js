@@ -8,7 +8,13 @@ const { GOOGLE_API_KEY } = require("../config/config");
 const apiKey = GOOGLE_API_KEY;
 
 // get the store page
-router.get('/', async (req, res) => { res.sendFile(path.join(__dirname, '../views/Shop.html')); })
+router.get('/', async (req, res) => {
+    //
+    if (req.session.isAdmin===true)
+        return res.sendFile(path.join(__dirname, '../views/adminEdit.html'));
+
+    return res.sendFile(path.join(__dirname, '../views/Shop.html'));
+})
 // get all
 router.get('/surfboards', surfboardsController.getAllSurfboards);
 // get surfboards by filter

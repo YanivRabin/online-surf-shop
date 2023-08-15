@@ -1,6 +1,18 @@
 $(document).ready(function() {
 
+    //change shop button if this is admin
+    const isAdmin = sessionStorage.getItem('isAdmin');
+
+    if (isAdmin)
+        $("#shop_btn").text("Edit Shop");
+
+    else
+        $("#shop_btn").text("Shop Now");
+
+
     $.ajax({
+
+
         url: '/weather',
         method: 'get',
         success: (response) => {

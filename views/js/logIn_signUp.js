@@ -61,8 +61,9 @@ $(document).ready(() => {
             method: 'POST',
             data: $('#login').serialize(),
             success: (response) => {
-                const {username} = response;
+                const {username, isAdmin} = response;
                 sessionStorage.setItem('username', username);
+                sessionStorage.setItem('isAdmin', isAdmin);
 
                 // Display a welcome message
                 alert('Welcome ' + username + '!!');

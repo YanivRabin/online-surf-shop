@@ -19,13 +19,43 @@
 <div id="navbar-container"></div>
 
 
-
     <!-- surfboards container -->
     <div id="main" class="container mt-4">
+
+        <!-- add item modal -->
+        <button class="btn btn-primary btn-addItem" type="button" data-bs-toggle="modal" data-bs-target="#addItemModal" style="background: rgba(155, 158, 163, 0); color: rgb(0, 0, 0); transform: perspective(0px) skew(0deg); border-color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center; border-radius: 8px; box-shadow: 0px 0px 20px 1px; margin-right: 5px">add Item</button>
+
+        <div class="modal fade" id="addItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Add New Item</h1>
+                        <button id="addItem-modal-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addItemForm">
+                            <label>company:<input type="text" id="item_company" name="company" required></label><br>
+                            <label>model:<input type="text" id="item_model" name="model" required></label><br>
+                            <label>price:<input type="text" id="item_price" name="price" required></label><br>
+                            <label>image:<input type="text" id="item_image" name="image" required></label><br>
+                            <label>type:<input type="text" id="item_type" name="type" required></label><br>
+                            <label>tail:<input type="text" id="item_tail" name="tail" required></label><br>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modalAddItemButton" type="button" class="btn btn-primary">Add Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- statistic -->
+        <button id="Statistic" type="button" data-bs-toggle="modal" data-bs-target="#stat" style="background: rgba(155, 158, 163, 0); color: rgb(0, 0, 0); transform: perspective(0px) skew(0deg); border-color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center; border-radius: 8px; box-shadow: 0px 0px 20px 1px; margin-right: 5px">Statistic</button>
+
         <ul id="surfboards-list" class="row"></ul>
     </div>
 
-    <!-- pop-up modal -->
+    <!-- update pop-up modal -->
     <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -50,6 +80,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- delete pop-up -->
     <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
