@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
         console.log(username + " is online");
         req.session.username = username;
         req.session.isAdmin = user.isAdmin;
-        return res.status(200).json({ message: 'User login successfully', username:username})    }
+        return res.status(200).json({ message: 'User login successfully', username:username, isAdmin:user.isAdmin})    }
     catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
