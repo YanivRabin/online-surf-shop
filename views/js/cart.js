@@ -81,11 +81,19 @@ $(document).ready(() => {
         });
     }
 
-    $('#checkOutButton').click(() => {
-       alert("בדיחה כדי להצחיק את שי");
-       $.ajax({
-           url: "/order/completeOrder",
-
-       })
+    $('#checkOutButton').click((e) => {
+        e.preventDefault();
+        $.ajax({
+            type: "post",
+            url: "/order/completeOrder",
+            success: function () {
+                $('#cart-list').empty();
+                alert("בדיחה כדי להצחיק את שי");
+                window.href("/");
+            },
+            error: (error) => {
+                alert("Error:" + error);
+            }
+        });
     });
 })

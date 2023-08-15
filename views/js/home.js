@@ -3,12 +3,12 @@ $(document).ready(function() {
     //change shop button if this is admin
     const isAdmin = sessionStorage.getItem('isAdmin');
 
-    if (isAdmin)
+    if (isAdmin === "true") {
         $("#shop_btn").text("Edit Shop");
-
-    else
+    }
+    else {
         $("#shop_btn").text("Shop Now");
-
+    }
 
     $.ajax({
 

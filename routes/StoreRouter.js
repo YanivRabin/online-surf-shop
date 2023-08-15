@@ -9,8 +9,7 @@ const apiKey = GOOGLE_API_KEY;
 
 // get the store page
 router.get('/', async (req, res) => {
-    //
-    if (req.session.isAdmin===true)
+    if (req.session.isAdmin === true)
         return res.sendFile(path.join(__dirname, '../views/adminEdit.html'));
 
     return res.sendFile(path.join(__dirname, '../views/Shop.html'));
@@ -30,7 +29,7 @@ router.get('/branches', async (req, res) => {
     try {
         const branches = await Store.find();
         let dataScript = `<script>let branches = ${JSON.stringify(branches)};</script>`;
-        let html = fs.readFileSync(path.join(__dirname, '../views/map.html'), 'utf-8');
+        let html = fs.readFileSync(path.join(__dirname, '../views/aboutUs.html'), 'utf-8');
         html = html.replace('<script src="https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&callback=initMap&language=en" async defer></script>'
             , dataScript + '<script src="https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&callback=initMap&language=en" async defer></script>');
         res.send(html);
