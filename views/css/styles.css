@@ -7,6 +7,7 @@
 /* Filter Styles */
 .filter {
   text-align: center;
+
 }
 
 .filter select, .filter input {
@@ -85,7 +86,7 @@
 
 
 /* Additional Styles */
-.filters-container { padding: 10px; border-radius: 5px; background-color: transparent; }
+.filters-container { padding: 10px; border-radius: 5px; background-color: transparent;  color: black; }
 .filter-space { margin: 0; padding: 5px; }
 .line-break { border-bottom: 1px solid black; padding-bottom: 20px; padding-top: 20px; }
 
@@ -112,3 +113,11 @@
   background: #5679ab;
 }
 
+/*items zoom*/
+
+.item:hover{
+  transform: scale(2);
+}
+.item{
+  transition: transform 0.3s;
+}
