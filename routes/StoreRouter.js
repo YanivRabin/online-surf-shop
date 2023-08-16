@@ -29,7 +29,7 @@ router.get('/branches', async (req, res) => {
     try {
         const branches = await Store.find();
         let dataScript = `<script>let branches = ${JSON.stringify(branches)};</script>`;
-        let html = fs.readFileSync(path.join(__dirname, '../views/aboutUs.html'), 'utf-8');
+        let html = fs.readFileSync(path.join(__dirname, '../views/mapAndContact.html'), 'utf-8');
         html = html.replace('<script src="https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&callback=initMap&language=en" async defer></script>'
             , dataScript + '<script src="https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&callback=initMap&language=en" async defer></script>');
         res.send(html);
