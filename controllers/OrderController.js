@@ -1,5 +1,6 @@
 const Order = require('../models/OrderModel');
 const Cart = require("../models/CartModel");
+const path = require("path");
 
 
 // get all the orders of specific user
@@ -143,7 +144,12 @@ const getDailySurfboardsSales = async (req, res) => {
     }
 };
 
+const getUserPage = async (req, res) => {
+    return res.sendFile(path.join(__dirname, '../views/user.html'));
+};
+
 module.exports = {
+    getUserPage,
     getUserOrders,
     getAllOrders,
     completeOrder,

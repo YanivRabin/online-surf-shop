@@ -20,6 +20,10 @@ $(document).ready(() => {
         updateLoginIcon(storedUsername);
     }
 
+    // $('#user-history').click(() => {
+    //     window.location.href = `/order/${storedUsername}`;
+    // });
+
     $('#switchToSignUp').click(() => {
         $('#login').css('display', 'none');
         $('#register-info').css('display', 'block');

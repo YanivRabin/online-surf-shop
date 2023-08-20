@@ -1,8 +1,12 @@
 const router = require('express').Router();
 const orderController = require('../controllers/orderController');
 const { isLoggedIn, isAdmin } = require("../controllers/AuthController");
+const path = require("path");
 
-
+// router.get('/user', orderController.getUserPage);
+router.get('/', async (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/user.html'));
+})
 // get all the orders of specific user
 router.post('/history', isLoggedIn, orderController.getUserOrders);
 // get all the orders of everyone, only for admin

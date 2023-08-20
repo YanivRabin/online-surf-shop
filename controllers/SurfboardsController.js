@@ -156,7 +156,22 @@ const getSurfboardsByFilter = async (req, res) => {
     }
 }
 
+const autoComplete = async (req, res) => {
+    const { searchTerm } = req.query;
+    try {
+        const autocompleteSuggestions = await Surfboard.distinct('company', {
+            company: { $regex: searchTerm, $options: 'i' }
+        });
+        res.json({ autocompleteSuggestions });
+    } catch (error) {
+        console.error('Error fetching autocomplete suggestions:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+
 module.exports = {
+    autoComplete,
     getAllSurfboards,
     createSurfboard,
     updateSurfboard,
