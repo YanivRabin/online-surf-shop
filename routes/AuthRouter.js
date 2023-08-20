@@ -2,7 +2,7 @@ const router = require("express").Router();
 const loginController  = require("../controllers/AuthController");
 const { isLoggedIn, isAdmin } = require("../controllers/AuthController");
 
-
+router.get("/signUp", loginController.getSignUp);
 // register, login and logout for user
 router.post("/register", loginController.registerUser);
 router.post("/login", loginController.loginUser);

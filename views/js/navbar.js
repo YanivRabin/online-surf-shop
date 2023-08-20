@@ -20,26 +20,37 @@ $(document).ready(() => {
         updateLoginIcon(storedUsername);
     }
 
+    $('#switchToSignUp').click(() => {
+        $('#login').css('display', 'none');
+        $('#register-info').css('display', 'block');
+    })
+
     // Handle Sign Up button click
-    $('#signUp').click((event) => {
+    $('#register-info').submit((event) => {
         event.preventDefault();
-        const username = $('#login-username').val();
-        // If the input is valid, make an AJAX request to register the user
-        $.ajax({
-            url: '/auth/register', // Replace with your server-side register URL
-            method: 'POST',
-            data: $('#login').serialize(),
-            success: (response) => {
-                // Registration successful
-                sessionStorage.setItem('username', username);
-                closeForm();
-                updateLoginIcon(username);
-            },
-            error: (xhr) => {
-                const {message} = xhr.responseJSON;
-                alert('Registration Error: ' + message);
-            }
-        });
+        const username = $('#username').val();
+        const password = $('#password1').val();
+        const password2 = $('#password2').val();
+
+        if (password !== password2) {
+            alert('The passwords do not match.');
+        }
+        else {
+            $.ajax({
+                url: '/auth/register',
+                method: 'POST',
+                data: { username, password },
+                success: () => {
+                    sessionStorage.setItem('username', username);
+                    updateLoginIcon(username);
+                    window.location.href = '/';
+                },
+                error: (xhr) => {
+                    const {message} = xhr.responseJSON;
+                    alert('Registration Error: ' + message);
+                }
+            });
+        }
     });
 
     // Handle Login form submission
@@ -55,7 +66,7 @@ $(document).ready(() => {
                 sessionStorage.setItem('username', username);
                 sessionStorage.setItem('isAdmin', isAdmin);
                 // Display a welcome message
-                alert('Welcome ' + username + '!!');
+                // alert('Welcome ' + username + '!!');
                 $('#loginIcon').html('<i class="fa fa-user-circle" style="transform: scale(1.15);color: rgb(85,121,171);"></i> ' + username);
                 // Hide the login form (assuming it has an ID "loginForm")
                 $('#loginForm').hide();
@@ -76,7 +87,7 @@ $(document).ready(() => {
             url: '/auth/logout', // Replace with your server-side logout URL
             method: 'POST',
             success: () => {
-                alert('You have successfully logged out!');
+                // alert('You have successfully logged out!');
                 sessionStorage.removeItem('username'); // Clear the username from session storage
                 sessionStorage.removeItem('isAdmin'); // Clear the isAdmin from session storage
                 updateLoginIcon(null); // Update the UI to show the login icon

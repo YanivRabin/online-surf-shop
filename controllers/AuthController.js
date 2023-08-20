@@ -1,5 +1,6 @@
 const User = require("../models/UserModel");
 const bcrypt = require('bcrypt');
+const path = require("path");
 
 
 const isLoggedIn = async (req, res, next) => {
@@ -84,7 +85,12 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const getSignUp = async (req, res) => {
+    return res.sendFile(path.join(__dirname, '../views/sign.html'));
+}
+
 module.exports = {
+    getSignUp,
     loginUser,
     registerUser,
     isLoggedIn,

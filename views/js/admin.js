@@ -1,5 +1,6 @@
 $(document).ready(function () {
     getSurfboards();
+
     function getSurfboards() {
         $.ajax({
             url: "/store/surfboards",
@@ -54,33 +55,6 @@ $(document).ready(function () {
         });
     }
 
-    function updateButton(id, company, model, price, image, type, tail) {
-        // Populate the form fields with the surfboard data
-        $('#_id').val(id);
-        $('#company').val(company);
-        $('#model').val(model);
-        $('#price').val(price);
-        $('#image').val(image);
-        $('#type').val(type);
-        $('#tail').val(tail);
-    }
-    $('#modalUpdateButton').click((event) => {
-        event.preventDefault();
-        $.ajax({
-            url: "/store/updateSurfboard",
-            method: "put",
-            data: $('#updateForm').serialize(),
-            success: () => {
-                $('#surfboards-list').empty();
-                getSurfboards();
-                $('#update-modal-close').click();
-            },
-            error: (error) => {
-                console.log('Error:', error);
-            }
-        })
-    });
-
     function deleteButton(surfboardId) {
         $('#modalDeleteButton').click((event) => {
             event.preventDefault();
@@ -99,4 +73,244 @@ $(document).ready(function () {
             });
         });
     }
+
+    function updateButton(id, company, model, price, image, type, tail) {
+        // Populate the form fields with the surfboard data
+        $('#_id').val(id);
+        $('#company').val(company);
+        $('#model').val(model);
+        $('#price').val(price);
+        $('#image').val(image);
+        $('#type').val(type);
+        $('#tail').val(tail);
+    }
+
+    function getGraphs() {
+        // Daily income chart
+        $.ajax({
+            url: '/order/dailyIncome',
+            method: 'get',
+            success: (response) => {
+                const { dailyIncome } = response;
+
+                // Chart dimensions and margins
+                const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+                const width = 100;
+                const height = 500;
+
+                // Create an SVG element for the chart
+                const svg = d3.select("#chart")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                // Define x and y scales
+                const xScale = d3.scaleBand()
+                    .range([0, width])
+                    .padding(0.1)
+                    .domain(dailyIncome.map(d => d._id.day));
+
+                const yScale = d3.scaleLinear()
+                    .range([height, 0])
+                    .domain([0, d3.max(dailyIncome, d => d.totalIncome)]);
+
+                // Define the line generator
+                const line = d3.line()
+                    .x(d => xScale(d._id.day) + xScale.bandwidth() / 2)
+                    .y(d => yScale(d.totalIncome))
+                    .curve(d3.curveMonotoneX);
+
+                // Create the line path
+                svg.append("path")
+                    .datum(dailyIncome)
+                    .attr("class", "line")
+                    .attr("d", line)
+                    .attr("fill", "none")
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 2);
+
+                // Create the y-axis
+                svg.append("g")
+                    .attr("class", "axis")
+                    .call(d3.axisLeft(yScale));
+
+                // Create the x-axis
+                svg.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(xScale));
+            }
+        });
+
+        // Surfboards sales
+        $.ajax({
+            url: '/order/dailySurfboardsSales',
+            method: 'get',
+            success: (response) => {
+                const { dailySurfboardsSales } = response;
+
+                // Chart dimensions and margins
+                const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+                const width = 500; // Adjust the width to accommodate three bars per day
+                const height = 500;
+
+                // Create an SVG element for the chart
+                const svg = d3.select("#surfboards-chart")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                // Extract unique surfboard names
+                const surfboards = Array.from(new Set(dailySurfboardsSales.map(d => d.surfboard)));
+
+                // Define x and y scales
+                const xScale = d3.scaleBand()
+                    .range([0, width])
+                    .padding(0.1)
+                    .domain(dailySurfboardsSales.map(d => d.day));
+
+                const yScale = d3.scaleLinear()
+                    .range([height, 0])
+                    .domain([0, d3.max(dailySurfboardsSales, d => d.totalQuantity)]);
+
+                // Create bars for each surfboard sales
+                svg.selectAll(".bar")
+                    .data(dailySurfboardsSales)
+                    .enter()
+                    .append("g")
+                    .attr("class", "bar")
+                    .attr("transform", d => `translate(${xScale(d.day)}, 0)`)
+                    .selectAll("rect")
+                    .data(d => {
+                        const surfboardIndex = surfboards.indexOf(d.surfboard);
+                        return Array.from({ length: surfboards.length }, (_, i) => ({
+                            surfboard: d.surfboard,
+                            index: i,
+                            quantity: i === surfboardIndex ? d.totalQuantity : 0
+                        }));
+                    })
+                    .enter()
+                    .append("rect")
+                    .attr("x", (d) => (xScale.bandwidth() / surfboards.length) * d.index)
+                    .attr("y", d => yScale(d.quantity))
+                    .attr("width", xScale.bandwidth() / surfboards.length)
+                    .attr("height", d => height - yScale(d.quantity))
+                    .attr("fill", (d, i) => d3.schemeCategory10[i]);
+
+                // Add the year and month on top of the graph
+                svg.append("text")
+                    .attr("x", width / 2)
+                    .attr("y", -margin.top / 2)
+                    .attr("text-anchor", "middle")
+                    .style("font-size", "14px")
+                    .text(`Year: ${dailySurfboardsSales[0].year}, Month: ${dailySurfboardsSales[0].month}`);
+
+                // Create the y-axis
+                svg.append("g")
+                    .attr("class", "axis")
+                    .call(d3.axisLeft(yScale));
+
+                // Create the x-axis
+                svg.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(xScale));
+            }
+        });
+    }
+
+    function getUsers() {
+        $.ajax({
+            url: '/auth/allUsers',
+            success: (response) => {
+                const { users } = response;
+                const usersList = $('#users-list');
+                users.forEach((user) => {
+                    const username = user.username;
+                    const userItem = $(
+                        '<div>' +
+                            '<button id="userButton">'+ username +'</button>' +
+                        '</div>'
+                    );
+                    userItem.find('#userButton').click(() => {
+                        $.ajax({
+                            method: "post",
+                            data: { username },
+                            url: "/order/history",
+                            success: (response) => {
+                                const { orders } = response;
+                                    $('#order-history').empty();
+                                    let i = 1;
+                                    orders.forEach((order) => {
+                                        $('#order-history').append('<p>Order: ' + i + '</p>');
+                                        order.products.forEach((product) => {
+                                            const listItem = $('<li>' + product.productId.company + ', ' + product.productId.model +
+                                                ', ' + product.productId.price + '$, amount:' + product.quantity + '</li>');
+                                            $('#order-history').append(listItem);
+                                        });
+                                        i++;
+                                    });
+                            }
+                        });
+                    });
+                    usersList.append(userItem);
+                });
+            }
+        })
+    }
+
+    $("#modalAddItemButton").click(() => {
+        $.ajax({
+            method: "post",
+            data: $("#addItemForm").serialize(),
+            url: "/store/createSurfboard",
+            success: () => {
+                alert("Item added successfully");
+                $('#addItem-modal-close').click();
+            },
+            error: (error) => {
+                console.log("Error:", error);
+            },
+        });
+    });
+
+    $('#modalUpdateButton').click((event) => {
+        event.preventDefault();
+        $.ajax({
+            url: "/store/updateSurfboard",
+            method: "put",
+            data: $('#updateForm').serialize(),
+            success: () => {
+                $('#surfboards-list').empty();
+                getSurfboards();
+                $('#update-modal-close').click();
+            },
+            error: (error) => {
+                console.log('Error:', error);
+            }
+        })
+    });
+
+    $("#surfboards").click(() => {
+        $("#statisticians-list").empty();
+        $("#users-list").empty();
+        $('#order-history').empty();
+        getSurfboards();
+    });
+
+    $("#statisticiansButton").click(() => {
+        $('#surfboards-list').empty();
+        $('#users-list').empty();
+        $('#order-history').empty();
+        getGraphs();
+    });
+
+    $('#usersButton').click(() => {
+        $("#statisticians-list").empty();
+        $('#surfboards-list').empty();
+        $('#order-history').empty();
+        getUsers();
+    });
 });

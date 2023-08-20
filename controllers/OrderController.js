@@ -4,7 +4,7 @@ const Cart = require("../models/CartModel");
 
 // get all the orders of specific user
 const getUserOrders = async (req, res) => {
-    const username = req.session.username;
+    const { username } = req.body;
     try {
         const orders = await Order.find({ username: username }).populate('products.productId').lean();
         if (!orders || orders.length === 0)
