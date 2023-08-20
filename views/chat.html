@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html lang="eng">
-<body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>ELMAR Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&amp;display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="fonts/material-icons.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
 
+<body style="background: url(img/yaniv22.jpg) center/cover repeat">
+
+<!-- nav bar -->
+<div id="navbar-container"></div>
+
+<!-- chat -->
 <form id="chat">
-    <label><input id="comment" autoComplete="off" placeholder="Enter text"/></label>
+    <label><input id="message" autoComplete="off" placeholder="Enter text"/></label>
     <button>Send</button>
 </form>
-
+<br>
 <div id="messages"></div>
+<br>
+<br>
+<!-- bottom & policy -->
+<div id="bottom-container"></div>
+
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossOrigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(function () {
         const socket = io();
@@ -20,9 +41,9 @@
         socket.emit('joined', username);
 
         $('button').click(function () {
-            const message = $('input').val();
-            socket.emit('new message', {username: getUsername(), message: message});
-            $('input').val('');
+            const message = $('#message').val();
+            socket.emit('new message', {username: username, message: message});
+            $('#message').val('');
         });
 
         socket.on('new message', function (data) {
@@ -49,7 +70,13 @@
         socket.emit('set username');
     });
 </script>
-
+<script>
+    $(function(){
+        $("#navbar-container").load("navbar.html");
+        $("#bottom-container").load("bottom.html");
+    });
+</script>
 
 </body>
+
 </html>
