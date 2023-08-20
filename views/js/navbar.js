@@ -25,6 +25,11 @@ $(document).ready(() => {
         $('#register-info').css('display', 'block');
     })
 
+    $('#switchToLogin').click(() => {
+        $('#login').css('display', 'block');
+        $('#register-info').css('display', 'none');
+    })
+
     // Handle Sign Up button click
     $('#register-info').submit((event) => {
         event.preventDefault();

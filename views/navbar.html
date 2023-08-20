@@ -71,8 +71,13 @@
           <input id="password1" class="form-control form-control" type="password" name="password1" placeholder="Password" style="margin-top:10px;" required>
           <input id="password2" class="form-control form-control" type="password" name="password2" placeholder="Confirm Password" style="margin-top:10px;" required>
         </div>
-        <div class="mb-3"></div>
-        <button id="signUpButton" class="btn btn-primary d-block w-100" type="submit" style="--bs-primary:#5679ab;--bs-primary-rgb:86,121,171;background:#5679ab;">SIGN UP</button>
+        <div class="mb-3">
+          <button id="signUpButton" class="btn btn-primary d-block w-100" type="submit" style="--bs-primary:#5679ab;--bs-primary-rgb:86,121,171;background:#5679ab;">SIGN UP</button>
+        </div>
+        <p class="text-muted">
+          <button type="button" id="switchToLogin">Log In</button>
+        </p>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
       </form>
     </div>
   </div>
