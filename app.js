@@ -48,7 +48,6 @@ app.use('/auth', authRouter); // for login and register
 app.use('/store', storeRouter); // for surfboards and other products
 app.use('/cart', cartRouter);
 app.use('/order', orderRouter);
-app.use('/chat', homeRouter);
 
 io.on('connection', (socket) => {
     socket.on('joined', (username) => {

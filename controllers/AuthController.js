@@ -1,6 +1,5 @@
 const User = require("../models/UserModel");
 const bcrypt = require('bcrypt');
-const path = require("path");
 
 
 const isLoggedIn = async (req, res, next) => {
@@ -77,20 +76,14 @@ const loginUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find({});
-        return res.status(200).json({ users: users });
-    }
-    catch (error) {
+        return res.status(200).json({users: users});
+    } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({message: 'Internal server error'});
     }
-}
-
-const getSignUp = async (req, res) => {
-    return res.sendFile(path.join(__dirname, '../views/sign.html'));
 }
 
 module.exports = {
-    getSignUp,
     loginUser,
     registerUser,
     isLoggedIn,
