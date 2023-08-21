@@ -13,31 +13,48 @@
     <link rel="stylesheet" href="css/Hero-Features-icons.css">
     <link rel="stylesheet" href="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.css">
     <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        button {
+            background: rgba(155, 158, 163, 0);
+            color: rgb(0, 0, 0);
+            transform: perspective(0px) skew(0deg);
+            border-color: rgb(0, 0, 0);
+            font-family: Montserrat, sans-serif;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0px 0px 20px 1px;
+            margin-right: 5px;
+        }
+    </style>
+
 </head>
+
 <body id="hero">
-    <!-- nav bar -->
-    <div id="navbar-container" ></div>
+<!-- nav bar -->
+<div id="navbar-container"></div>
 
-    <!-- main container -->
-    <div id="main" class="container mt-4">
+<!-- main container -->
+<div id="main" class="container mt-4">
 
-        <!-- surfboards -->
-        <button id="surfboards" type="button" style="background: rgba(155, 158, 163, 0); color: rgb(0, 0, 0); transform: perspective(0px) skew(0deg); border-color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center; border-radius: 8px; box-shadow: 0px 0px 20px 1px; margin-right: 5px">Surfboards</button>
-        <!-- add item -->
-        <button class="btn btn-primary btn-addItem" type="button" data-bs-toggle="modal" data-bs-target="#addItemModal" style="background: rgba(155, 158, 163, 0); color: rgb(0, 0, 0); transform: perspective(0px) skew(0deg); border-color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center; border-radius: 8px; box-shadow: 0px 0px 20px 1px; margin-right: 5px">Add surfboard</button>
-        <!-- statistic -->
-        <button id="statisticiansButton" type="button" style="background: rgba(155, 158, 163, 0); color: rgb(0, 0, 0); transform: perspective(0px) skew(0deg); border-color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center; border-radius: 8px; box-shadow: 0px 0px 20px 1px; margin-right: 5px">Statisticians</button>
-        <!-- users -->
-        <button id="usersButton" type="button" style="background: rgba(155, 158, 163, 0); color: rgb(0, 0, 0); transform: perspective(0px) skew(0deg); border-color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center; border-radius: 8px; box-shadow: 0px 0px 20px 1px; margin-right: 5px">Users</button>
+    <!-- surfboards -->
+    <button id="surfboards" type="button" class="custom-button">Surfboards</button>
+    <!-- add item -->
+    <button type="button" data-bs-toggle="modal" data-bs-target="#addItemModal" class="custom-button">Add surfboard</button>
+    <!-- statistic -->
+    <button id="statisticiansButton" type="button" class="custom-button">Statisticians</button>
+    <!-- users -->
+    <button id="usersButton" type="button" class="custom-button">Users</button>
 
-        <ul id="surfboards-list" class="row"></ul>
-        <div id="statisticians-list">
-            <svg id="chart"></svg>
-            <svg id="surfboards-chart"></svg>
-        </div>
-        <ul id="users-list"></ul>
-        <ul id="order-history"></ul>
+    <ul id="surfboards-list" class="row"></ul>
+    <div id="statisticians-list">
+        <svg id="chart"></svg>
+        <svg id="surfboards-chart"></svg>
     </div>
+    <ul id="users-list"></ul>
+    <ul id="order-history"></ul>
+</div>
+
 
     <!-- update pop-up modal -->
     <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
