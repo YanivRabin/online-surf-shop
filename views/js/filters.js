@@ -46,7 +46,7 @@ $(document).ready(function() {
                 const createSurfboardListItem = (surfboard) => {
                     const listItem = $(
                         '<br >' +
-                        '<div style="text-align: center; font-family: Montserrat, sans-serif; background-color: #d3d4d5;  opacity: 0.9;" >' +
+                        '<div style="text-align: center; font-family: Montserrat, sans-serif; background-color: #ffffff;  opacity: 0.9;" >' +
                         '<h1 style="font-size: 15px; margin-top: 10px;">' + surfboard.company + " / " + surfboard.model + '</h1>' +
                         `<button class="item" type="button" disabled style="background:url('../img/surfboards/${surfboard.image}') center / cover no-repeat; height: 200px; width: 150px; border-color: rgba(0, 0, 0, 0);"></button>` +
                         '<p style="font-size: 15px; font-family: Montserrat, sans-serif; margin-top: 10px;">Price: <i class="fa fa-dollar"></i>&nbsp;' + surfboard.price + '&nbsp;</p>' +
