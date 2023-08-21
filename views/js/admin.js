@@ -220,46 +220,53 @@ $(document).ready(function () {
             }
         });
     }
-
     function getUsers() {
         $.ajax({
             url: '/auth/allUsers',
             success: (response) => {
                 const { users } = response;
                 const usersList = $('#users-list');
+
+                // Clear the existing users from the list
+                usersList.empty();
+
                 users.forEach((user) => {
                     const username = user.username;
                     const userItem = $(
                         '<div>' +
-                            '<button id="userButton">'+ username +'</button>' +
+                        '<button class="userButton" data-username="'+ username +'">'+ username +'</button>' +
                         '</div>'
                     );
-                    userItem.find('#userButton').click(() => {
-                        $.ajax({
-                            method: "post",
-                            data: { username },
-                            url: "/order/history",
-                            success: (response) => {
-                                const { orders } = response;
-                                    $('#order-history').empty();
-                                    let i = 1;
-                                    orders.forEach((order) => {
-                                        $('#order-history').append('<p>Order: ' + i + '</p>');
-                                        order.products.forEach((product) => {
-                                            const listItem = $('<li>' + product.productId.company + ', ' + product.productId.model +
-                                                ', ' + product.productId.price + '$, amount:' + product.quantity + '</li>');
-                                            $('#order-history').append(listItem);
-                                        });
-                                        i++;
-                                    });
-                            }
-                        });
-                    });
                     usersList.append(userItem);
                 });
             }
-        })
+        });
     }
+
+// Use event delegation for user button clicks
+    $('#users-list').on('click', '.userButton', function() {
+        const username = $(this).data('username'); // Use data attribute to get the username
+        $.ajax({
+            method: "post",
+            data: { username },
+            url: "/order/history",
+            success: (response) => {
+                const { orders } = response;
+                $('#order-history').empty();
+                let i = 1;
+                orders.forEach((order) => {
+                    $('#order-history').append('<p>Order: ' + i + '</p>');
+                    order.products.forEach((product) => {
+                        const listItem = $('<li>' + product.productId.company + ', ' + product.productId.model +
+                            ', ' + product.productId.price + '$, amount:' + product.quantity + '</li>');
+                        $('#order-history').append(listItem);
+                    });
+                    i++;
+                });
+            }
+        });
+    });
+
 
     $("#modalAddItemButton").click(() => {
         $.ajax({
