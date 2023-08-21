@@ -5,7 +5,7 @@ const path = require("path");
 
 // router.get('/user', orderController.getUserPage);
 router.get('/', async (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/user.html'));
+    res.sendFile(path.join(__dirname, '../views/orders_history.html'));
 })
 // get all the orders of specific user
 router.post('/history', isLoggedIn, orderController.getUserOrders);

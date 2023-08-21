@@ -145,7 +145,7 @@ const getDailySurfboardsSales = async (req, res) => {
 };
 
 const getUserPage = async (req, res) => {
-    return res.sendFile(path.join(__dirname, '../views/user.html'));
+    return res.sendFile(path.join(__dirname, '../views/orders_history.html'));
 };
 
 module.exports = {
