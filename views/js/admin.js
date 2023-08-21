@@ -6,6 +6,7 @@ $(document).ready(function () {
             url: "/store/surfboards",
             method: "get",
             success: (response) => {
+
                 const { surfboards } = response;
                 const surfboardList = $('#surfboards-list');
                 // Function to create and append surfboard list items to the surfboards list
@@ -76,16 +77,25 @@ $(document).ready(function () {
 
     function updateButton(id, company, model, price, image, type, tail) {
         // Populate the form fields with the surfboard data
-        $('#_id').val(id);
-        $('#company').val(company);
-        $('#model').val(model);
-        $('#price').val(price);
-        $('#image').val(image);
-        $('#type').val(type);
-        $('#tail').val(tail);
+        try {
+            $('#_id').val(id);
+            $('#company').val(company);
+            $('#model').val(model);
+            $('#price').val(price);
+            $('#image').val(image);
+            $('#type').val(type);
+            $('#tail').val(tail);
+        } catch (error) {
+            console.error('Error while updating the surfboard information:', error);
+        }
     }
 
+
     function getGraphs() {
+
+        d3.select("#chart").selectAll("*").remove();
+        d3.select("#surfboards-chart").selectAll("*").remove();
+
         // Daily income chart
         $.ajax({
             url: '/order/dailyIncome',
@@ -148,6 +158,7 @@ $(document).ready(function () {
             url: '/order/dailySurfboardsSales',
             method: 'get',
             success: (response) => {
+
                 const { dailySurfboardsSales } = response;
 
                 // Chart dimensions and margins
@@ -301,13 +312,18 @@ $(document).ready(function () {
     });
 
     $("#surfboards").click(() => {
-        $("#statisticians-list").empty();
+        // $("#statisticians-list").empty();
+        $("#chart").hide();
+        $("#surfboards-chart").hide();
         $("#users-list").empty();
         $('#order-history').empty();
         getSurfboards();
+
     });
 
     $("#statisticiansButton").click(() => {
+        $("#chart").show();
+        $("#surfboards-chart").show();
         $('#surfboards-list').empty();
         $('#users-list').empty();
         $('#order-history').empty();
@@ -315,9 +331,12 @@ $(document).ready(function () {
     });
 
     $('#usersButton').click(() => {
-        $("#statisticians-list").empty();
+        // $("#statisticians-list").empty();
+        $("#chart").hide();
+        $("#surfboards-chart").hide();
         $('#surfboards-list').empty();
         $('#order-history').empty();
         getUsers();
+
     });
 });
