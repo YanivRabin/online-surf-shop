@@ -92,7 +92,7 @@ $(document).ready(() => {
                 window.href("/");
             },
             error: (error) => {
-                alert("You dont have any item");
+                alert("You dont have any items");
             }
         });
     });
