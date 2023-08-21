@@ -96,8 +96,8 @@ $(document).ready(function() {
                 alert(message);
             },
             error: function(xhr, status, error) {
-                alert("error")
-                console.log("Error:", error);
+                alert("You must Login")
+                console.log("error");
             }
         });
     }
