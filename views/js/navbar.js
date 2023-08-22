@@ -1,5 +1,16 @@
 $(document).ready(() => {
 
+    // $('#searchForm').submit((event) => {
+    //     event.preventDefault(); // prevent default form submission
+    //     const searchTerm = $('#navbarSearchInput').val(); // get the search term
+    //     // You can handle the search logic here or redirect to a search results page
+    //     console.log('Searching for:', searchTerm);
+    // });
+    //
+    // $('#searchIcon').click(() => {
+    //     $('#searchForm').toggleClass('hidden-search-form'); // toggles the visibility of the search form
+    // });
+
     // Function to update the login icon and logged-in username in the UI
     function updateLoginIcon(username) {
         if (username) {
@@ -127,3 +138,4 @@ function open_Logout_Form() {
 function close_Logout_Form() {
     document.getElementById("LogOutForm").style.display = "none";
 }
+

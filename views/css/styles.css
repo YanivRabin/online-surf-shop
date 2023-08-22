@@ -212,4 +212,7 @@ button.custom-button {
 .bs-icon.bs-icon-circle {
   border-radius: 50%;
 }
+.hidden-search-form {
+  display: none;
+}
 
