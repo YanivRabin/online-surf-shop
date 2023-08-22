@@ -5,8 +5,6 @@ const path = require('path');
 const session = require('express-session');
 const socketIO = require('socket.io');
 const http = require('http');
-const multer = require('multer');
-const fs = require('fs');
 const homeRouter = require('./routes/HomeRouter');
 const storeRouter = require('./routes/StoreRouter');
 const authRouter = require('./routes/AuthRouter');
@@ -20,16 +18,6 @@ const io = socketIO(server);
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-});
-
-// Configure Multer
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './views/img/surfboards');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    }
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));

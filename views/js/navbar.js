@@ -1,16 +1,5 @@
 $(document).ready(() => {
 
-    // $('#searchForm').submit((event) => {
-    //     event.preventDefault(); // prevent default form submission
-    //     const searchTerm = $('#navbarSearchInput').val(); // get the search term
-    //     // You can handle the search logic here or redirect to a search results page
-    //     console.log('Searching for:', searchTerm);
-    // });
-    //
-    // $('#searchIcon').click(() => {
-    //     $('#searchForm').toggleClass('hidden-search-form'); // toggles the visibility of the search form
-    // });
-
     // Function to update the login icon and logged-in username in the UI
     function updateLoginIcon(username) {
         if (username) {
@@ -30,10 +19,6 @@ $(document).ready(() => {
         // Call the function to update the UI with the stored username
         updateLoginIcon(storedUsername);
     }
-
-    // $('#user-history').click(() => {
-    //     window.location.href = `/order/${storedUsername}`;
-    // });
 
     $('#switchToSignUp').click(() => {
         $('#login').css('display', 'none');

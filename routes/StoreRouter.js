@@ -14,8 +14,6 @@ router.get('/', async (req, res) => {
 
     return res.sendFile(path.join(__dirname, '../views/Shop.html'));
 })
-// autocomplete search
-router.get('/autocompleteSearch', surfboardsController.autoComplete);
 // get all
 router.get('/surfboards', surfboardsController.getAllSurfboards);
 // get surfboards by filter
