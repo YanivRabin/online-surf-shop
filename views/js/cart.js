@@ -88,10 +88,10 @@ $(document).ready(() => {
             url: "/order/completeOrder",
             success: function () {
                 $('#cart-list').empty();
-                alert("בדיחה כדי להצחיק את שי");
+                alert("Thank you for your purchase")
                 window.href("/");
             },
-            error: (error) => {
+            error: () => {
                 alert("You dont have any items");
             }
         });

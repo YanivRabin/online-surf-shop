@@ -317,6 +317,8 @@ $(document).ready(function () {
         $("#surfboards-chart").hide();
         $("#users-list").empty();
         $('#order-history').empty();
+        $('#daily-income').hide();
+        $('#daily-surfboards-sales').hide();
         getSurfboards();
 
     });
@@ -327,6 +329,8 @@ $(document).ready(function () {
         $('#surfboards-list').empty();
         $('#users-list').empty();
         $('#order-history').empty();
+        $('#daily-income').show();
+        $('#daily-surfboards-sales').show();
         getGraphs();
     });
 
@@ -336,6 +340,8 @@ $(document).ready(function () {
         $("#surfboards-chart").hide();
         $('#surfboards-list').empty();
         $('#order-history').empty();
+        $('#daily-income').hide();
+        $('#daily-surfboards-sales').hide();
         getUsers();
 
     });
