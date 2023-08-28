@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $('#daily-income').hide();
+    $('#daily-surfboards-sales').hide();
     getSurfboards();
 
     function getSurfboards() {
